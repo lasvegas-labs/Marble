@@ -7,10 +7,23 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var router: AppRouter
+    @EnvironmentObject private var router: AppRouter
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
     var body: some View {
         NavigationStack(path: $router.path) {
-            HomeRouteBuilder.build(.main)
+            Group {
+                if hasCompletedOnboarding {
+                    HomeRouteBuilder.build(.main)
+                } else {
+                    OnboardingRouteBuilder.build(.main) {
+                        router.popToRoot()
+                        withAnimation(.smooth) {
+                            hasCompletedOnboarding = true
+                        }
+                    }
+                }
+            }
                 .navigationDestination(
                     for: AppRoute.self,
                 ) { route in
