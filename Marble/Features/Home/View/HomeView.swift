@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var router: AppRouter
     @StateObject private var viewModel: HomeViewModel
 
     // buat contructor agar bisa inject view model di home route builder
@@ -15,12 +16,20 @@ struct HomeView: View {
     }
 
     var body: some View {
-        Text("Ini adalah homescreen")
+        VStack(spacing: 20) {
+            Text("Ini adalah homescreen")
 
-        Button(action: viewModel.sayHelloFromHome) {
-            Text("Print Hello World!")
-
+            Button(action: viewModel.sayHelloFromHome) {
+                Text("Print Hello World!")
+            }
+            .buttonStyle(.borderedProminent)
+            
+            Button(action: {
+                router.push(.orb)
+            }) {
+                Text("View Orb POC")
+            }
+            .buttonStyle(.bordered)
         }
-        .buttonStyle(.borderedProminent)
     }
 }

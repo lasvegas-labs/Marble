@@ -8,4 +8,5 @@ import Foundation
 
 enum AppRoute: Hashable {
     case home(HomeRoute)
+    case orb
 }
