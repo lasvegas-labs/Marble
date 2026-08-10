@@ -11,6 +11,10 @@ struct RootView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some View {
+        appContent
+    }
+
+    private var appContent: some View {
         NavigationStack(path: $router.path) {
             Group {
                 if hasCompletedOnboarding {
@@ -24,11 +28,11 @@ struct RootView: View {
                     }
                 }
             }
-                .navigationDestination(
-                    for: AppRoute.self,
-                ) { route in
-                    AppRouteBuilder.build(route)
-                }
+            .navigationDestination(
+                for: AppRoute.self,
+            ) { route in
+                AppRouteBuilder.build(route)
+            }
         }
         .sheet(item: $router.presentedSheet) { route in
             AppRouteBuilder.build(route)
