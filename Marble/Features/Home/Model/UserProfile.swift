@@ -6,7 +6,6 @@
 
 import Foundation
 
-// ini adalah placeholder layer model
 struct UserProfile: Codable, Identifiable {
     let id: UUID
     var userName: String

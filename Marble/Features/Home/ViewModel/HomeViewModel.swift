@@ -5,12 +5,9 @@
 //
 
 import Combine
-import Foundation
 
 final class HomeViewModel: ObservableObject {
-
-    // Contoh method/bussiness logic view model
-    func sayHelloFromHome() {
+    func printGreeting() {
         print("Hello from home!")
     }
 }
