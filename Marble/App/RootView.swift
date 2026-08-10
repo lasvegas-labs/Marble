@@ -20,5 +20,10 @@ struct RootView: View {
         .sheet(item: $router.presentedSheet) { route in
             AppRouteBuilder.build(route)
         }
+        .onOpenURL { url in
+            if url.scheme == "marble" && url.host == "recommendation" {
+                router.presentSheet(.recommendation)
+            }
+        }
     }
 }

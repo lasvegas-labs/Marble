@@ -8,6 +8,8 @@ import Foundation
 
 enum AppRoute: Hashable, Identifiable {
     case home(HomeRoute)
+    case friction(FrictionRoute)
+    case recommendation // Placeholder for now
 
     var id: Self { self }
 }

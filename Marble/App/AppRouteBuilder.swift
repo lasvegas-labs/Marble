@@ -12,6 +12,10 @@ struct AppRouteBuilder {
         switch route {
         case .home(let homeRoute):
             HomeRouteBuilder.build(homeRoute)
+        case .friction(let frictionRoute):
+            FrictionRouteBuilder.build(frictionRoute)
+        case .recommendation:
+            RecommendationView()
         }
     }
 }
