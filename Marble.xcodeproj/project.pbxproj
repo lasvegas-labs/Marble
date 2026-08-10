@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */ = {isa = PBXBuildFile; productRef = A47C1D0D30A1000100A1B2C3 /* Orb */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		9F2B623A3029825D00345B7B /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Marble;
 			packageProductDependencies = (
+				A47C1D0D30A1000100A1B2C3 /* Orb */,
 			);
 			productName = Marble;
 			productReference = 9F2B623A3029825D00345B7B /* Marble.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 9F2B62313029825D00345B7B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9F2B623B3029825D00345B7B /* Products */;
 			projectDirPath = "";
@@ -328,6 +337,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/metasidd/Orb.git";
+			requirement = {
+				kind = revision;
+				revision = 8c5dda85e55638893f37657b56558968c3e11409;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A47C1D0D30A1000100A1B2C3 /* Orb */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */;
+			productName = Orb;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9F2B62323029825D00345B7B /* Project object */;
 }
