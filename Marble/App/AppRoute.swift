@@ -6,6 +6,8 @@
 
 import Foundation
 
-enum AppRoute: Hashable {
+enum AppRoute: Hashable, Identifiable {
     case home(HomeRoute)
+
+    var id: Self { self }
 }

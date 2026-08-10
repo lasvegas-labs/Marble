@@ -17,5 +17,8 @@ struct RootView: View {
                     AppRouteBuilder.build(route)
                 }
         }
+        .sheet(item: $router.presentedSheet) { route in
+            AppRouteBuilder.build(route)
+        }
     }
 }

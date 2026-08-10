@@ -5,30 +5,38 @@
 //
 
 import Combine
-import SwiftUI
 
 final class AppRouter: ObservableObject {
     @Published var path: [AppRoute] = []
+    @Published var presentedSheet: AppRoute?
 
-    // push screen from stack
     func push(_ route: AppRoute) {
         path.append(route)
     }
 
-    // pop screen from stack
     func pop() {
         guard !path.isEmpty else { return }
         path.removeLast()
     }
 
-    // back to the root screen
     func popToRoot() {
-        path.removeLast()
+        path.removeAll()
     }
 
-    // replace the last screen from stack
     func replace(with route: AppRoute) {
-        path.removeLast(path.count)
-        path.append(route)
+        guard !path.isEmpty else {
+            push(route)
+            return
+        }
+
+        path[path.endIndex - 1] = route
+    }
+
+    func presentSheet(_ route: AppRoute) {
+        presentedSheet = route
+    }
+
+    func dismissSheet() {
+        presentedSheet = nil
     }
 }
