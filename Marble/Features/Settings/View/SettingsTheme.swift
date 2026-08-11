@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum SettingsTheme {
-    static let background        = Color(red: 1, green: 1, blue: 1)
-    static let cardBackground    = Color(red: 1, green: 1, blue: 1)
+    static let background        = Color(.systemBackground)
+    static let cardBackground    = Color(.systemBackground)
     static let secondaryFill     = Color(.systemGray6)
     static let iconFill          = Color(.systemGray5)
     static let divider           = Color(.systemGray5)
