@@ -18,6 +18,10 @@ struct AppRouteBuilder {
             SettingsRouteBuilder.build(settingsRoute)
         case .future(let futureRoute):
             FutureRouteBuilder.build(futureRoute)
+        case .friction(let frictionRoute):
+            FrictionRouteBuilder.build(frictionRoute)
+        case .recommendation:
+            RecommendationView()
         }
     }
 }

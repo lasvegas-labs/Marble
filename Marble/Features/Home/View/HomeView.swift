@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct HomeView: View {
     @EnvironmentObject private var router: AppRouter

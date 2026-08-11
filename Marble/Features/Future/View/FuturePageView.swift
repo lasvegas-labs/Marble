@@ -129,7 +129,7 @@ struct FuturePageView: View {
             .font(.system(.title2, design: .rounded))
             .padding(.bottom, 30)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .navigationBar)
         .background(Color(uiColor: .systemBackground).ignoresSafeArea())
     }
 }
