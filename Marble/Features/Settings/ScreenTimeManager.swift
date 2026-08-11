@@ -39,6 +39,8 @@ public class ScreenTimeManager: ObservableObject {
     private init() {
         loadSavedSelection()
         checkAuthorizationStatus()
+        applyShield()
+        updateDeviceActivityMonitoring()
     }
     
     public func checkAuthorizationStatus() {
@@ -80,6 +82,7 @@ public class ScreenTimeManager: ObservableObject {
         let hasWebDomains = !selectionToDiscourage.webDomainTokens.isEmpty
         
         guard hasAuthorization, (hasApps || hasCategories || hasWebDomains) else {
+            print("ScreenTimeManager: Skipping startMonitoring. Authorized: \(hasAuthorization), Has Selection: \(hasApps || hasCategories || hasWebDomains)")
             activityCenter.stopMonitoring([Self.activityName])
             return
         }
@@ -105,6 +108,7 @@ public class ScreenTimeManager: ObservableObject {
                 during: schedule,
                 events: [Self.eventName: event]
             )
+            print("Successfully started monitoring DeviceActivity: \(Self.activityName)")
         } catch {
             print("Failed to start DeviceActivity monitoring: \(error)")
         }
@@ -113,6 +117,7 @@ public class ScreenTimeManager: ObservableObject {
     private func saveSelection() {
         guard let data = try? PropertyListEncoder().encode(selectionToDiscourage) else { return }
         sharedDefaults?.set(data, forKey: savedSelectionKey)
+        sharedDefaults?.set(usageThresholdMinutes, forKey: "usage_threshold_minutes")
         sharedDefaults?.synchronize()
     }
     
@@ -122,5 +127,12 @@ public class ScreenTimeManager: ObservableObject {
             return
         }
         self.selectionToDiscourage = selection
+    }
+    
+    public func simulateThresholdReached() {
+        sharedDefaults?.set("fifteenMinuteThreshold", forKey: "marble_shield_state")
+        sharedDefaults?.synchronize()
+        applyShield()
+        print("ScreenTimeManager: Simulated 15-minute threshold reached! Shield re-applied.")
     }
 }

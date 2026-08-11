@@ -2,6 +2,7 @@ import DeviceActivity
 import FamilyControls
 import Foundation
 import ManagedSettings
+import UserNotifications
 
 // This extension is invoked in the background by iOS when cumulative device activity events reach their threshold
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
@@ -26,12 +27,15 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
         
-        // 1. Re-apply shield to the discouraged applications
-        reapplyShield()
-        
-        // 2. Set shield state to fifteenMinuteThreshold
+        // 1. Set shield state to fifteenMinuteThreshold FIRST to avoid race condition
         sharedDefaults?.set("fifteenMinuteThreshold", forKey: stateKey)
         sharedDefaults?.synchronize()
+        
+        // 2. Re-apply shield to the discouraged applications
+        reapplyShield()
+        
+        // 3. Post a debug notification to visually confirm execution
+        sendDebugNotification()
     }
     
     override func intervalWillStartWarning(for activity: DeviceActivityName) {
@@ -56,7 +60,22 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         let categories = selection.categoryTokens
         
         store.shield.applications = applications.isEmpty ? nil : applications
-        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
-        store.shield.webDomainCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
+        store.shield.applicationCategories = categories.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(categories)
+        store.shield.webDomainCategories = categories.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(categories)
+    }
+    
+    private func sendDebugNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Marble Alert ⏰"
+        content.body = "1 minute cumulative usage threshold has been reached!"
+        content.sound = .default
+        
+        let request = UNNotificationRequest(
+            identifier: "threshold_reached_debug",
+            content: content,
+            trigger: nil // immediate
+        )
+        
+        UNUserNotificationCenter.current().add(request) { _ in }
     }
 }
