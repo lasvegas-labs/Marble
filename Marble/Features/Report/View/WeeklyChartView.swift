@@ -14,21 +14,23 @@ struct WeeklyChartView: View {
         VStack(alignment: .leading, spacing: 16) {
             Chart {
                 ForEach(dailyData) { dataPoint in
-                    // Last Week
+                    // Background Bar (Total Height = Last Week + This Week) -> Gray
                     BarMark(
                         x: .value("Day", dataPoint.day),
                         yStart: .value("Min", 0),
-                        yEnd: .value("Max", dataPoint.lastWeekHours)
+                        yEnd: .value("Max", dataPoint.hours + dataPoint.lastWeekHours)
                     )
                     .foregroundStyle(Color.secondary.opacity(0.3))
+                    .cornerRadius(8)
 
-                    // This Week
+                    // Foreground Bar (This Week) -> Green
                     BarMark(
                         x: .value("Day", dataPoint.day),
                         yStart: .value("Min", 0),
                         yEnd: .value("Max", dataPoint.hours)
                     )
                     .foregroundStyle(Color(red: 0.18, green: 0.83, blue: 0.75))
+                    .cornerRadius(8)
                     .annotation(position: .top) {
                         if dataPoint.isHighlighted {
                             Text("\(Int(dataPoint.hours))h")
