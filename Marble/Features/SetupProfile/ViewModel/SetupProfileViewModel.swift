@@ -172,6 +172,7 @@ final class SetupProfileViewModel: ObservableObject {
 
         case .focusWindow:
             selectedWeekdays = []
+            screenTimeService.stopFocusMonitoring()
             return persist(nextStep: .orbPersona)
 
         case .orbPersona:
@@ -250,21 +251,30 @@ final class SetupProfileViewModel: ObservableObject {
         }
 
         guard permissionStatus.isApproved, selectedDistractionCount > 0 else {
+            screenTimeService.stopUsageMonitoring()
             screenTimeService.stopFocusMonitoring()
             return true
         }
 
         do {
             try screenTimeService.saveSelection(activitySelection)
-            model.isScreenTimeConfigured = try screenTimeService.configureFocusMonitoring(
+            let isUsageMonitoringConfigured = try screenTimeService.configureUsageMonitoring(
+                for: activitySelection
+            )
+            let isFocusMonitoringConfigured = try screenTimeService.configureFocusMonitoring(
+                for: activitySelection,
                 startMinutes: model.focusStartMinutes,
                 endMinutes: model.focusEndMinutes,
                 weekdays: Set(
                     model.focusWeekdays.compactMap(FocusWeekday.init(rawValue:))
                 )
             )
+            model.isScreenTimeConfigured = isUsageMonitoringConfigured
+                && isFocusMonitoringConfigured
             try modelContext.save()
         } catch {
+            screenTimeService.stopUsageMonitoring()
+            screenTimeService.stopFocusMonitoring()
             model.isScreenTimeConfigured = false
             try? modelContext.save()
             errorMessage = "Your profile was saved, but the focus schedule could not be activated."

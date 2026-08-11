@@ -8,9 +8,14 @@ import UserNotifications
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     
     let store = ManagedSettingsStore()
+    private let focusStore = ManagedSettingsStore(
+        named: ManagedSettingsStore.Name("marble.focus")
+    )
     private let appGroupID = "group.com.lasvegas.Marblefahmi1"
     private let savedSelectionKey = "saved_activity_selection"
     private let stateKey = "marble_shield_state"
+    private let focusWindowActiveKey = "screenTime.focusWindowActive"
+    private let focusActivityPrefix = "marble.focus."
     
     private var sharedDefaults: UserDefaults? {
         UserDefaults(suiteName: appGroupID)
@@ -18,10 +23,26 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     
     override func intervalDidStart(for activity: DeviceActivityName) {
         super.intervalDidStart(for: activity)
+
+        guard isFocusActivity(activity) else { return }
+
+        guard let selection = savedSelection(), hasSelection(selection) else {
+            setFocusWindowActive(false)
+            clearFocusShield()
+            return
+        }
+
+        setFocusWindowActive(true)
+        applyFocusShield(for: selection)
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
         super.intervalDidEnd(for: activity)
+
+        guard isFocusActivity(activity) else { return }
+
+        clearFocusShield()
+        setFocusWindowActive(false)
     }
     
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
@@ -51,8 +72,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     }
     
     private func reapplyShield() {
-        guard let data = sharedDefaults?.data(forKey: savedSelectionKey),
-              let selection = try? PropertyListDecoder().decode(FamilyActivitySelection.self, from: data) else {
+        guard let selection = savedSelection() else {
             return
         }
         
@@ -62,6 +82,54 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         store.shield.applications = applications.isEmpty ? nil : applications
         store.shield.applicationCategories = categories.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(categories)
         store.shield.webDomainCategories = categories.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(categories)
+    }
+
+    private func savedSelection() -> FamilyActivitySelection? {
+        guard let data = sharedDefaults?.data(forKey: savedSelectionKey) else {
+            return nil
+        }
+
+        return try? PropertyListDecoder().decode(
+            FamilyActivitySelection.self,
+            from: data
+        )
+    }
+
+    private func hasSelection(_ selection: FamilyActivitySelection) -> Bool {
+        !selection.applicationTokens.isEmpty
+            || !selection.categoryTokens.isEmpty
+            || !selection.webDomainTokens.isEmpty
+    }
+
+    private func isFocusActivity(_ activity: DeviceActivityName) -> Bool {
+        activity.rawValue.hasPrefix(focusActivityPrefix)
+    }
+
+    private func applyFocusShield(for selection: FamilyActivitySelection) {
+        let applications = selection.applicationTokens
+        let categories = selection.categoryTokens
+        let webDomains = selection.webDomainTokens
+
+        focusStore.shield.applications = applications.isEmpty ? nil : applications
+        focusStore.shield.applicationCategories = categories.isEmpty
+            ? nil
+            : .specific(categories)
+        focusStore.shield.webDomains = webDomains.isEmpty ? nil : webDomains
+        focusStore.shield.webDomainCategories = categories.isEmpty
+            ? nil
+            : .specific(categories)
+    }
+
+    private func clearFocusShield() {
+        focusStore.shield.applications = nil
+        focusStore.shield.applicationCategories = nil
+        focusStore.shield.webDomains = nil
+        focusStore.shield.webDomainCategories = nil
+    }
+
+    private func setFocusWindowActive(_ isActive: Bool) {
+        sharedDefaults?.set(isActive, forKey: focusWindowActiveKey)
+        sharedDefaults?.synchronize()
     }
     
     private func sendDebugNotification() {
