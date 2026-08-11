@@ -10,6 +10,7 @@
 		2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */; };
 		4EF06D4B3C4D5CA522A1C182 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9187DEBB9FA2AD21728F736 /* ShieldConfigurationExtension.swift */; };
 		9E8243745208FF5D90044DEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
+		A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */ = {isa = PBXBuildFile; productRef = A47C1D0D30A1000100A1B2C3 /* Orb */; };
 		AF2607659A14BC1E52FD3D31 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
 		C0BDF0214D4FEC941BD9982C /* MarbleShieldAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */; };
 		D7FFF1A496B41E8C60B37048 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C3C61F3227503BCCE6C45 /* ShieldActionExtension.swift */; };
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +153,9 @@
 				9F2B623C3029825D00345B7B /* Marble */,
 			);
 			name = Marble;
+			packageProductDependencies = (
+				A47C1D0D30A1000100A1B2C3 /* Orb */,
+			);
 			productName = Marble;
 			productReference = 9F2B623A3029825D00345B7B /* Marble.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +223,9 @@
 			);
 			mainGroup = 9F2B62313029825D00345B7B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9F2B623B3029825D00345B7B /* Products */;
 			projectDirPath = "";
@@ -288,7 +296,7 @@
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldAction/MarbleShieldAction.entitlements;
 				DEVELOPMENT_TEAM = QH8QAGW526;
 				INFOPLIST_FILE = MarbleShieldAction/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldAction;
 				PRODUCT_NAME = MarbleShieldAction;
 				SDKROOT = iphoneos;
@@ -305,7 +313,7 @@
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldAction/MarbleShieldAction.entitlements;
 				DEVELOPMENT_TEAM = QH8QAGW526;
 				INFOPLIST_FILE = MarbleShieldAction/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldAction;
 				PRODUCT_NAME = MarbleShieldAction;
 				SDKROOT = iphoneos;
@@ -451,7 +459,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -485,7 +493,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,7 +518,7 @@
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldConfiguration/MarbleShieldConfiguration.entitlements;
 				DEVELOPMENT_TEAM = QH8QAGW526;
 				INFOPLIST_FILE = MarbleShieldConfiguration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldConfiguration;
 				PRODUCT_NAME = MarbleShieldConfiguration;
 				SDKROOT = iphoneos;
@@ -527,7 +535,7 @@
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldConfiguration/MarbleShieldConfiguration.entitlements;
 				DEVELOPMENT_TEAM = QH8QAGW526;
 				INFOPLIST_FILE = MarbleShieldConfiguration/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldConfiguration;
 				PRODUCT_NAME = MarbleShieldConfiguration;
 				SDKROOT = iphoneos;
@@ -578,6 +586,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/metasidd/Orb.git";
+			requirement = {
+				kind = revision;
+				revision = 8c5dda85e55638893f37657b56558968c3e11409;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A47C1D0D30A1000100A1B2C3 /* Orb */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A47C1D0C30A1000100A1B2C3 /* XCRemoteSwiftPackageReference "Orb" */;
+			productName = Orb;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9F2B62323029825D00345B7B /* Project object */;
 }
