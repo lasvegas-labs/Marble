@@ -1,57 +1,123 @@
 import ManagedSettings
-import Foundation
-import UIKit
 import UserNotifications
 
+// This extension handles the button clicks (Primary and Secondary) on the shield screen
 class ShieldActionExtension: ShieldActionDelegate {
     
-    override func handle(action: ShieldAction, for application: ApplicationToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+    nonisolated override init() {
+        super.init()
+    }
+    
+    // Handles actions when a specific application is shielded
+    nonisolated override func handle(
+        action: ShieldAction,
+        for application: ApplicationToken,
+        completionHandler: @escaping (ShieldActionResponse) -> Void
+    ) {
         switch action {
-        case .primaryButtonPressed:
-            // "See Recommendation"
-            // Schedule a local notification to appear 0.5 seconds after returning to the home screen.
-            let content = UNMutableNotificationContent()
-            content.title = "Marble Recommendation"
-            content.body = "Tap here to see your fun recommendation!"
-            content.sound = .default
+        case .primaryButtonPressed: // "Show The Recommendation"
+            // Trigger a local notification to deep-link the user into the Marble app
+            sendRecommendationNotification()
             
-            // Add a slight delay to ensure it pops up AFTER the shield closes and user is on the home screen
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            // Close the shielded app immediately (returns user to home screen)
+            completionHandler(.close)
             
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Failed to schedule notification: \(error)")
-                }
-                // Close the shielded app to return to home screen
-                completionHandler(.close)
-            }
+        case .secondaryButtonPressed: // "Continue Scrolling"
+            // Temporarily lift the shield for this app by removing it from the store
+            liftShield(for: application)
             
-        case .secondaryButtonPressed:
-            // "Continue Scrolling" - unblock the app instantly
-            let store = ManagedSettingsStore() // Use default store to avoid App Group crash
-            if var applications = store.shield.applications {
-                applications.remove(application)
-                store.shield.applications = applications.isEmpty ? nil : applications
-            } else {
-                store.shield.applications = nil
-            }
+            // .none indicates no additional action is needed from the system,
+            // as we already removed the shield, allowing the app to open.
+            completionHandler(.none)
             
-            // Use .defer on a physical device. It tells iOS to check the store.
-            // Since we just removed the app from the store, iOS will instantly dismiss the shield
-            // and the user will stay inside the app!
-            completionHandler(.defer)
-            
-        @unknown default:
-            completionHandler(.defer)
+        default:
+            completionHandler(.none)
         }
     }
     
-    override func handle(action: ShieldAction, for webDomain: WebDomainToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        completionHandler(.defer)
+    // Handles actions when a whole category is shielded
+    nonisolated override func handle(
+        action: ShieldAction,
+        for category: ActivityCategoryToken,
+        completionHandler: @escaping (ShieldActionResponse) -> Void
+    ) {
+        switch action {
+        case .primaryButtonPressed: // "Show The Recommendation"
+            sendRecommendationNotification()
+            completionHandler(.close)
+            
+        case .secondaryButtonPressed: // "Continue Scrolling"
+            liftShield(for: category)
+            completionHandler(.none)
+            
+        default:
+            completionHandler(.none)
+        }
     }
     
-    override func handle(action: ShieldAction, for category: ActivityCategoryToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        completionHandler(.defer)
+    // Handles actions when a web domain is shielded
+    nonisolated override func handle(
+        action: ShieldAction,
+        for webDomain: WebDomainToken,
+        completionHandler: @escaping (ShieldActionResponse) -> Void
+    ) {
+        switch action {
+        case .primaryButtonPressed:
+            sendRecommendationNotification()
+            completionHandler(.close)
+            
+        case .secondaryButtonPressed:
+            let store = ManagedSettingsStore()
+            if var webDomains = store.shield.webDomains {
+                webDomains.remove(webDomain)
+                store.shield.webDomains = webDomains
+            }
+            completionHandler(.none)
+            
+        default:
+            completionHandler(.none)
+        }
+    }
+    
+    // MARK: - Logic Helpers (marked nonisolated to match calling context)
+    
+    nonisolated private func liftShield(for application: ApplicationToken) {
+        let store = ManagedSettingsStore()
+        
+        if var applications = store.shield.applications {
+            applications.remove(application)
+            store.shield.applications = applications
+        }
+    }
+    
+    nonisolated private func liftShield(for category: ActivityCategoryToken) {
+        let store = ManagedSettingsStore()
+        
+        if case .specific(var categories, let exclusions) = store.shield.applicationCategories {
+            categories.remove(category)
+            store.shield.applicationCategories = categories.isEmpty ? nil : .specific(categories, except: exclusions)
+        }
+    }
+    
+    nonisolated private func sendRecommendationNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Marble Recommendation 💡"
+        content.body = "Tap here to see your fun recommendation!"
+        content.sound = .default
+        content.userInfo = ["url": "marble://recommendation"]
+        
+        // Fire after 1 second
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: "marble_recommendation",
+            content: content,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error)")
+            }
+        }
     }
 }
