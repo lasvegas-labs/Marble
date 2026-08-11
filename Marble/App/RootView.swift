@@ -38,9 +38,12 @@ struct RootView: View {
             AppRouteBuilder.build(route)
         }
         .onOpenURL { url in
-            if url.scheme == "marble" && url.host == "recommendation" {
-                router.presentSheet(.recommendation)
+            if url.scheme == "marble" {
+                router.navigateToRecommendation()
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openRecommendation)) { _ in
+            router.navigateToRecommendation()
         }
     }
 }

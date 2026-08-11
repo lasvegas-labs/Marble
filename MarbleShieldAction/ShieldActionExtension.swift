@@ -1,5 +1,42 @@
+import Foundation
+import Intents
 import ManagedSettings
 import UserNotifications
+
+public enum MarbleShieldState: String, Codable {
+    case friction
+    case waitingForNotification
+    case focusActive
+}
+
+public final class ShieldStateManager {
+    public static let shared = ShieldStateManager()
+    
+    private let appGroupID = "group.com.lasvegas.Marblefahmi1"
+    private let stateKey = "marble_shield_state"
+    
+    private var userDefaults: UserDefaults? {
+        UserDefaults(suiteName: appGroupID)
+    }
+    
+    public var currentState: MarbleShieldState {
+        get {
+            guard let rawValue = userDefaults?.string(forKey: stateKey),
+                  let state = MarbleShieldState(rawValue: rawValue) else {
+                return .friction
+            }
+            return state
+        }
+        set {
+            userDefaults?.set(newValue.rawValue, forKey: stateKey)
+            userDefaults?.synchronize()
+        }
+    }
+    
+    public func reset() {
+        currentState = .friction
+    }
+}
 
 // This extension handles the button clicks (Primary and Secondary) on the shield screen
 class ShieldActionExtension: ShieldActionDelegate {
@@ -15,19 +52,12 @@ class ShieldActionExtension: ShieldActionDelegate {
         completionHandler: @escaping (ShieldActionResponse) -> Void
     ) {
         switch action {
-        case .primaryButtonPressed: // "Show The Recommendation"
-            // Trigger a local notification to deep-link the user into the Marble app
-            sendRecommendationNotification()
+        case .primaryButtonPressed:
+            handlePrimaryAction(completionHandler: completionHandler)
             
-            // Close the shielded app immediately (returns user to home screen)
-            completionHandler(.close)
-            
-        case .secondaryButtonPressed: // "Continue Scrolling"
-            // Temporarily lift the shield for this app by removing it from the store
+        case .secondaryButtonPressed:
             liftShield(for: application)
-            
-            // .none indicates no additional action is needed from the system,
-            // as we already removed the shield, allowing the app to open.
+            ShieldStateManager.shared.reset()
             completionHandler(.none)
             
         default:
@@ -42,12 +72,12 @@ class ShieldActionExtension: ShieldActionDelegate {
         completionHandler: @escaping (ShieldActionResponse) -> Void
     ) {
         switch action {
-        case .primaryButtonPressed: // "Show The Recommendation"
-            sendRecommendationNotification()
-            completionHandler(.close)
+        case .primaryButtonPressed:
+            handlePrimaryAction(completionHandler: completionHandler)
             
-        case .secondaryButtonPressed: // "Continue Scrolling"
+        case .secondaryButtonPressed:
             liftShield(for: category)
+            ShieldStateManager.shared.reset()
             completionHandler(.none)
             
         default:
@@ -63,15 +93,11 @@ class ShieldActionExtension: ShieldActionDelegate {
     ) {
         switch action {
         case .primaryButtonPressed:
-            sendRecommendationNotification()
-            completionHandler(.close)
+            handlePrimaryAction(completionHandler: completionHandler)
             
         case .secondaryButtonPressed:
-            let store = ManagedSettingsStore()
-            if var webDomains = store.shield.webDomains {
-                webDomains.remove(webDomain)
-                store.shield.webDomains = webDomains
-            }
+            liftShield(for: webDomain)
+            ShieldStateManager.shared.reset()
             completionHandler(.none)
             
         default:
@@ -79,11 +105,52 @@ class ShieldActionExtension: ShieldActionDelegate {
         }
     }
     
-    // MARK: - Logic Helpers (marked nonisolated to match calling context)
+    // MARK: - Action Helpers
+    
+    nonisolated private func handlePrimaryAction(completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        let currentState = ShieldStateManager.shared.currentState
+        
+        switch currentState {
+        case .friction:
+            // User tapped "Show The Recommendation"
+            // Schedule the notification and transition to waitingForNotification without closing the shield
+            sendRecommendationNotification()
+            ShieldStateManager.shared.currentState = .waitingForNotification
+            completionHandler(.defer)
+            
+        case .waitingForNotification:
+            // User tapped "Didn't See The Notification"
+            // Check Focus status using public Apple API
+            let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
+            if isFocused {
+                ShieldStateManager.shared.currentState = .focusActive
+            } else {
+                // Focus is OFF: Resend notification and keep waiting state
+                sendRecommendationNotification()
+                ShieldStateManager.shared.currentState = .waitingForNotification
+            }
+            completionHandler(.defer)
+            
+        case .focusActive:
+            // User tapped "Try Again"
+            // Recheck Focus status
+            let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
+            if isFocused {
+                // Focus still active: maintain focus explanation
+                ShieldStateManager.shared.currentState = .focusActive
+            } else {
+                // Focus now OFF: resend notification and return to waiting state
+                sendRecommendationNotification()
+                ShieldStateManager.shared.currentState = .waitingForNotification
+            }
+            completionHandler(.defer)
+        }
+    }
+    
+    // MARK: - Logic Helpers
     
     nonisolated private func liftShield(for application: ApplicationToken) {
         let store = ManagedSettingsStore()
-        
         if var applications = store.shield.applications {
             applications.remove(application)
             store.shield.applications = applications
@@ -92,21 +159,27 @@ class ShieldActionExtension: ShieldActionDelegate {
     
     nonisolated private func liftShield(for category: ActivityCategoryToken) {
         let store = ManagedSettingsStore()
-        
         if case .specific(var categories, let exclusions) = store.shield.applicationCategories {
             categories.remove(category)
             store.shield.applicationCategories = categories.isEmpty ? nil : .specific(categories, except: exclusions)
         }
     }
     
+    nonisolated private func liftShield(for webDomain: WebDomainToken) {
+        let store = ManagedSettingsStore()
+        if var webDomains = store.shield.webDomains {
+            webDomains.remove(webDomain)
+            store.shield.webDomains = webDomains
+        }
+    }
+    
     nonisolated private func sendRecommendationNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Marble Recommendation 💡"
-        content.body = "Tap here to see your fun recommendation!"
+        content.title = "Marble"
+        content.body = "Click to see activity recommendations"
         content.sound = .default
         content.userInfo = ["url": "marble://recommendation"]
         
-        // Fire after 1 second
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(
             identifier: "marble_recommendation",

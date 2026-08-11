@@ -13,9 +13,20 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         return true
     }
     
+    // Show banner even when app is foregrounded
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .badge])
+    }
+    
+    // Handle notification tap
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .openRecommendation, object: nil)
+        }
         if let url = URL(string: "marble://recommendation") {
-            UIApplication.shared.open(url)
+            DispatchQueue.main.async {
+                UIApplication.shared.open(url)
+            }
         }
         completionHandler()
     }
@@ -56,6 +67,14 @@ struct MarbleApp: App {
                 }
             }
             .environmentObject(router)
+            .onOpenURL { url in
+                if url.scheme == "marble" {
+                    router.navigateToRecommendation()
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openRecommendation)) { _ in
+                router.navigateToRecommendation()
+            }
             .task(id: isHandoffStarted) {
                 guard isHandoffStarted, !reduceMotion else { return }
 
