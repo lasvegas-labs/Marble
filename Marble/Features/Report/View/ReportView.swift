@@ -1,6 +1,5 @@
 //
 //  ReportView.swift
-//
 //  Created by Marble on 11/08/26.
 //
 
@@ -10,7 +9,7 @@ struct ReportView: View {
     @StateObject private var viewModel: ReportViewModel
     @EnvironmentObject private var router: AppRouter
 
-    init(viewModel: ReportViewModel) {
+    init(viewModel: ReportViewModel = ReportViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 

@@ -14,6 +14,10 @@ struct AppRouteBuilder {
             HomeRouteBuilder.build(homeRoute)
         case .report(let reportRoute):
             ReportRouteBuilder.build(reportRoute)
+        case .settings(let settingsRoute):
+            SettingsRouteBuilder.build(settingsRoute)
+        case .future(let futureRoute):
+            FutureRouteBuilder.build(futureRoute)
         }
     }
 }
