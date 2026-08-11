@@ -15,37 +15,23 @@ struct RootView: View {
     }
 
     private var appContent: some View {
-        TabView {
-            // Home tab
-            NavigationStack(path: $router.path) {
-                Group {
-                    if hasCompletedOnboarding {
-                        HomeRouteBuilder.build(.main)
-                    } else {
-                        OnboardingRouteBuilder.build(.main) {
-                            router.popToRoot()
-                            withAnimation(.smooth) {
-                                hasCompletedOnboarding = true
-                            }
+        NavigationStack(path: $router.path) {
+            Group {
+                if hasCompletedOnboarding {
+                    HomeRouteBuilder.build(.main)
+                } else {
+                    OnboardingRouteBuilder.build(.main) {
+                        router.popToRoot()
+                        withAnimation(.smooth) {
+                            hasCompletedOnboarding = true
                         }
                     }
                 }
-                .navigationDestination(
-                    for: AppRoute.self,
-                ) { route in
-                    AppRouteBuilder.build(route)
-                }
             }
-            .tabItem {
-                Label("Home", systemImage: "house.fill")
-            }
-
-            // Report tab
-            NavigationStack {
-                ReportRouteBuilder.build(.main)
-            }
-            .tabItem {
-                Label("Report", systemImage: "chart.bar.fill")
+            .navigationDestination(
+                for: AppRoute.self,
+            ) { route in
+                AppRouteBuilder.build(route)
             }
         }
         .sheet(item: $router.presentedSheet) { route in
