@@ -145,9 +145,11 @@ final class ScreenTimeService {
     private func mapAuthorizationStatus(
         _ status: AuthorizationStatus
     ) -> ScreenTimePermissionStatus {
-        if #available(iOS 26.4, *), status == .approvedWithDataAccess {
+        #if swift(>=5.10)
+        if #available(iOS 17.4, *), status == .approvedWithDataAccess {
             return .approvedWithDataAccess
         }
+        #endif
 
         switch status {
         case .notDetermined: return .notDetermined
