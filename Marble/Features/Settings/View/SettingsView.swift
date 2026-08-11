@@ -34,7 +34,12 @@ struct SettingsView: View {
                         if screenTime.hasAuthorization {
                             isPickerPresented = true
                         } else {
-                            screenTime.requestAuthorization()
+                            Task {
+                                await screenTime.requestAuthorizationAsync()
+                                if screenTime.hasAuthorization {
+                                    isPickerPresented = true
+                                }
+                            }
                         }
                     }
                     Divider().padding(.leading, 64)
@@ -60,6 +65,9 @@ struct SettingsView: View {
         .background(SettingsTheme.background)
         .navigationBarHidden(true)
         .familyActivityPicker(isPresented: $isPickerPresented, selection: $screenTime.selectionToDiscourage)
+        .onAppear {
+            screenTime.checkAuthorizationStatus()
+        }
     }
 
     private func settingsNavRow(icon: String, label: String, action: @escaping () -> Void = {}) -> some View {
