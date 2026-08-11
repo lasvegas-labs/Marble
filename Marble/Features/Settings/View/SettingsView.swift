@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct SettingsView: View {
     @EnvironmentObject private var router: AppRouter
     @StateObject private var viewModel: SettingsViewModel
+    @ObservedObject private var screenTime = ScreenTimeManager.shared
+    @State private var isPickerPresented = false
 
     init(viewModel: SettingsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -28,7 +31,11 @@ struct SettingsView: View {
                     settingsNavRow(icon: "person", label: "Edit your profile")
                     Divider().padding(.leading, 64)
                     settingsNavRow(icon: "square.3.layers.3d", label: "Edit your choosen apps") {
-                        router.push(.settings(.editApps))
+                        if screenTime.hasAuthorization {
+                            isPickerPresented = true
+                        } else {
+                            screenTime.requestAuthorization()
+                        }
                     }
                     Divider().padding(.leading, 64)
                     settingsNavRow(icon: "siri", label: "Choose your companion")
@@ -52,6 +59,7 @@ struct SettingsView: View {
         }
         .background(SettingsTheme.background)
         .navigationBarHidden(true)
+        .familyActivityPicker(isPresented: $isPickerPresented, selection: $screenTime.selectionToDiscourage)
     }
 
     private func settingsNavRow(icon: String, label: String, action: @escaping () -> Void = {}) -> some View {

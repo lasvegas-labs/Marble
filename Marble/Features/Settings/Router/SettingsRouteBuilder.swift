@@ -13,8 +13,6 @@ struct SettingsRouteBuilder {
         switch route {
         case .main:
             SettingsView(viewModel: SettingsViewModel())
-        case .editApps:
-            EditAppsView(viewModel: EditAppsViewModel())
         }
     }
 }
