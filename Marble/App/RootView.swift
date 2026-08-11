@@ -42,13 +42,18 @@ struct RootView: View {
                 }
             }
             .navigationDestination(
-                for: AppRoute.self,
+                for: AppRoute.self
             ) { route in
                 AppRouteBuilder.build(route)
             }
         }
         .sheet(item: $router.presentedSheet) { route in
             AppRouteBuilder.build(route)
+        }
+        .onOpenURL { url in
+            if url.scheme == "marble" && url.host == "recommendation" {
+                router.presentSheet(.recommendation)
+            }
         }
     }
 

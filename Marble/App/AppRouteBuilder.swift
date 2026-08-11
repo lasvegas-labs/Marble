@@ -12,6 +12,16 @@ struct AppRouteBuilder {
         switch route {
         case .home(let homeRoute):
             HomeRouteBuilder.build(homeRoute)
+        case .report(let reportRoute):
+            ReportRouteBuilder.build(reportRoute)
+        case .settings(let settingsRoute):
+            SettingsRouteBuilder.build(settingsRoute)
+        case .future(let futureRoute):
+            FutureRouteBuilder.build(futureRoute)
+        case .friction(let frictionRoute):
+            FrictionRouteBuilder.build(frictionRoute)
+        case .recommendation:
+            RecommendationView()
         }
     }
 }

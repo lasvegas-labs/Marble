@@ -64,7 +64,7 @@ struct OnboardingView: View {
                 )
             }
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .navigationBar)
         .task(id: viewModel.selectedPageIndex) {
             try? await Task.sleep(for: .seconds(4))
             guard !Task.isCancelled else { return }

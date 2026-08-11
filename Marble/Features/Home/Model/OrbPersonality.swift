@@ -7,15 +7,13 @@
 
 import Foundation
 
-enum OrbPersonality: String, CaseIterable, Codable {
+enum OrbPersonality: String, CaseIterable, Codable, Identifiable {
     case gentle = "gentle"
     case passive = "passive"
     case aggressive = "aggressive"
     
     static var defaultValue: OrbPersonality { .gentle }
-}
-
-extension OrbPersonality: Identifiable {
+    
     var id: Self { self }
 
     var title: String {
@@ -42,4 +40,3 @@ extension OrbPersonality: Identifiable {
         }
     }
 }
-

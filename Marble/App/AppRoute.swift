@@ -8,6 +8,11 @@ import Foundation
 
 enum AppRoute: Hashable, Identifiable {
     case home(HomeRoute)
+    case report(ReportRoute)
+    case settings(SettingsRoute)
+    case future(FutureRoute)
+    case friction(FrictionRoute)
+    case recommendation
 
     var id: Self { self }
 }
