@@ -12,7 +12,7 @@ struct TimeImpactCardView: View {
     @Binding var showGradeTooltip: Bool
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Weekly you spent")
                     .font(.subheadline)
@@ -25,7 +25,7 @@ struct TimeImpactCardView: View {
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .center, spacing: 4) {
                 HStack(spacing: 4) {
                     Text("Your Grade:")
                         .font(.caption)
