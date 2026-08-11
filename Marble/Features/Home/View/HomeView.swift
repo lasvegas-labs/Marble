@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var router: AppRouter
     @StateObject private var viewModel: HomeViewModel
+    @AppStorage("hasCompletedPersonalization_v3") private var hasCompletedPersonalization = false
 
     init(viewModel: HomeViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -18,12 +19,18 @@ struct HomeView: View {
     var body: some View {
         TabView(selection: $viewModel.selectedTab) {
             // Tab 0: Home Content
-            homeTabContent
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+            Group {
+                if hasCompletedPersonalization {
+                    homeTabContent
+                } else {
+                    emptyStateContent
                 }
-                .tag(0)
+            }
+            .tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
+            }
+            .tag(0)
 
             // Tab 1: Report Content
             ReportRouteBuilder.build(.main)
@@ -47,16 +54,28 @@ struct HomeView: View {
     }
 
     private var homeTabContent: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
+            // Header Title
+            HStack {
+                Text("Home")
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                Spacer()
+            }
+            .padding(.horizontal, 28)
+            .padding(.top, 24)
+
             Spacer()
 
-            // 1. Center: Dynamic Orb Mascot
-            DynamicOrbView(
-                personality: viewModel.orbPersonality,
-                sliderValue: viewModel.glowSliderValue
-            )
-            .frame(width: 220, height: 220)
-            .padding(.vertical, 10)
+            // 1. Center: Dynamic Orb Mascot (Resized to 320x320)
+            HStack {
+                Spacer()
+                DynamicOrbView(
+                    personality: viewModel.orbPersonality,
+                    sliderValue: viewModel.glowSliderValue
+                )
+                .frame(width: 320, height: 320)
+                Spacer()
+            }
 
             Spacer()
 
@@ -84,7 +103,7 @@ struct HomeView: View {
                 }
             }
             .padding(.horizontal, 28)
-            .padding(.bottom, 25)
+            .padding(.bottom, 16)
 
             // 3. Clickable Screen Time Overview Card
             Button(action: {
@@ -102,7 +121,7 @@ struct HomeView: View {
 
                         Text("See what happen in the future, if you do this constantly.")
                             .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(Color(uiColor: .systemGray))
+                            .foregroundColor(.primary)
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
                     }
@@ -115,7 +134,67 @@ struct HomeView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.horizontal, 28)
-            .padding(.bottom, 20)
+            .padding(.bottom, 24)
+        }
+        .background(Color(uiColor: .systemBackground).ignoresSafeArea())
+    }
+
+    private var emptyStateContent: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            // Center: Dynamic Orb Mascot (Resized to 270x270 for empty state)
+            HStack {
+                Spacer()
+                DynamicOrbView(
+                    personality: viewModel.orbPersonality,
+                    sliderValue: viewModel.glowSliderValue
+                )
+                .frame(width: 270, height: 270)
+                Spacer()
+            }
+
+            Spacer()
+
+            // Empty State Text Stack
+            VStack(spacing: 8) {
+                Text("No Datas")
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text("Please complete your personalization details.")
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
+            .padding(.bottom, 24)
+
+            Spacer()
+
+            // Start Button
+            Button(action: {
+                withAnimation(.smooth) {
+                    hasCompletedPersonalization = true
+                }
+            }) {
+                Text("Start")
+                    .font(.system(.body, design: .rounded).bold())
+                    .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        Capsule()
+                            .fill(Color(uiColor: .systemBackground))
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color.black.opacity(0.04), lineWidth: 1.0)
+                    )
+                    .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
+            }
+            .padding(.horizontal, 28)
+            .padding(.bottom, 24)
         }
         .background(Color(uiColor: .systemBackground).ignoresSafeArea())
     }
