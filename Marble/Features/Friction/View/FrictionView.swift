@@ -19,8 +19,11 @@ struct FrictionView: View {
             Spacer()
             
             // Mascot
-            MarbleOrb(primaryColor: .teal, secondaryColor: .green)
-                .frame(width: 180, height: 180)
+            Image("ShieldIcon")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 228, height: 228)
+                .clipShape(RoundedRectangle(cornerRadius: 48, style: .continuous))
                 .padding(.bottom, 16)
 
             // Title
