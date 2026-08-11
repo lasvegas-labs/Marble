@@ -28,26 +28,34 @@ struct SettingsView: View {
                     .padding(.bottom, 24)
 
                 VStack(spacing: 0) {
-                    settingsNavRow(icon: "person", label: "Edit your profile")
+                    SettingsRowView(icon: "person", label: "Edit your profile")
                     Divider().padding(.leading, 64)
-                    settingsNavRow(icon: "square.3.layers.3d", label: "Edit your choosen apps") {
-                        isPickerPresented = true
-                        if !screenTime.hasAuthorization {
+                    SettingsRowView(icon: "square.3.layers.3d", label: "Edit your choosen apps") {
+                        if screenTime.hasAuthorization {
+                            isPickerPresented = true
+                        } else {
                             screenTime.requestAuthorization()
                         }
                     }
                     Divider().padding(.leading, 64)
-                    settingsNavRow(icon: "siri", label: "Choose your companion")
+                    SettingsRowView(icon: "siri", label: "Choose your companion")
                     Divider().padding(.leading, 64)
-                    settingsNavRow(icon: "figure.mind.and.body.circle", label: "Edit your focus window")
+                    SettingsRowView(icon: "figure.mind.and.body.circle", label: "Edit your focus window")
                     Divider().padding(.leading, 64)
-                    settingsToggleRow(
+                    SettingsToggleRowView(
                         icon: "app.badge.clock",
                         label: "Screen Time Access",
-                        isOn: $viewModel.isScreenTimeAccessEnabled
+                        isOn: Binding(
+                            get: { screenTime.hasAuthorization },
+                            set: { newValue in
+                                if newValue {
+                                    screenTime.requestAuthorization()
+                                }
+                            }
+                        )
                     )
                     Divider().padding(.leading, 64)
-                    settingsToggleRow(
+                    SettingsToggleRowView(
                         icon: "bell",
                         label: "Notification Access",
                         isOn: $viewModel.isNotificationAccessEnabled
@@ -63,11 +71,17 @@ struct SettingsView: View {
             screenTime.checkAuthorizationStatus()
         }
     }
+}
 
-    private func settingsNavRow(icon: String, label: String, action: @escaping () -> Void = {}) -> some View {
-        Button {
-            action()
-        } label: {
+// MARK: - Reusable Row Components
+
+struct SettingsRowView: View {
+    let icon: String
+    let label: String
+    var action: () -> Void = {}
+
+    var body: some View {
+        Button(action: action) {
             HStack(spacing: 16) {
                 Image(systemName: icon)
                     .resizable()
@@ -92,12 +106,14 @@ struct SettingsView: View {
         }
         .buttonStyle(.plain)
     }
+}
 
-    private func settingsToggleRow(
-        icon: String,
-        label: String,
-        isOn: Binding<Bool>
-    ) -> some View {
+struct SettingsToggleRowView: View {
+    let icon: String
+    let label: String
+    @Binding var isOn: Bool
+
+    var body: some View {
         HStack(spacing: 16) {
             Image(systemName: icon)
                 .resizable()
@@ -112,7 +128,7 @@ struct SettingsView: View {
 
             Spacer()
 
-            Toggle("", isOn: isOn)
+            Toggle("", isOn: $isOn)
                 .labelsHidden()
                 .tint(SettingsTheme.teal)
         }
