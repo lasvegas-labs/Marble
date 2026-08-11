@@ -12,6 +12,8 @@ struct AppRouteBuilder {
         switch route {
         case .home(let homeRoute):
             HomeRouteBuilder.build(homeRoute)
+        case .report(let reportRoute):
+            ReportRouteBuilder.build(reportRoute)
         }
     }
 }
