@@ -8,7 +8,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var router: AppRouter
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = true
 
     var body: some View {
         appContent
@@ -29,7 +29,7 @@ struct RootView: View {
                 }
             }
             .navigationDestination(
-                for: AppRoute.self,
+                for: AppRoute.self
             ) { route in
                 AppRouteBuilder.build(route)
             }
