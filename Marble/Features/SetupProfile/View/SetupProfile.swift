@@ -61,11 +61,13 @@ struct SetupProfileView: View {
             HStack(spacing: 12) {
                 Button(action: backAction) {
                     Image(systemName: "chevron.left")
-                        .font(.headline)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.primary)
                         .frame(width: 42, height: 42)
+                        .background(Color(uiColor: .systemGray6))
+                        .clipShape(Circle())
                 }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
+                .buttonStyle(.plain)
                 .accessibilityLabel(
                     viewModel.currentStep == .gender
                         ? "Back to introduction"
