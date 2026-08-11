@@ -8,4 +8,6 @@
 import Combine
 
 final class SettingsViewModel: ObservableObject {
+    @Published var isScreenTimeAccessEnabled: Bool = true
+    @Published var isNotificationAccessEnabled: Bool = false
 }

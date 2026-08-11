@@ -22,16 +22,24 @@ public class ScreenTimeManager: ObservableObject {
     
     private init() {}
     
+    public func checkAuthorizationStatus() {
+        hasAuthorization = AuthorizationCenter.shared.authorizationStatus == .approved
+    }
+    
     public func requestAuthorization() {
         Task {
-            do {
-                try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
-                try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
-                hasAuthorization = true
-            } catch {
-                print("Failed to authorize Family Controls: \(error)")
-                hasAuthorization = false
-            }
+            await requestAuthorizationAsync()
+        }
+    }
+
+    public func requestAuthorizationAsync() async {
+        do {
+            try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
+            try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+            hasAuthorization = (AuthorizationCenter.shared.authorizationStatus == .approved)
+        } catch {
+            print("Failed to authorize Family Controls: \(error)")
+            hasAuthorization = false
         }
     }
     
