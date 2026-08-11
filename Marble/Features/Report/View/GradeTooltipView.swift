@@ -22,14 +22,14 @@ struct GradeTooltipView: View {
                 }
             }
 
-            Button(action: { dismiss() }) {
-                Text("Close")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(8)
-                    .foregroundColor(.primary)
-            }
+            // Button(action: { dismiss() }) {
+            //     Text("Close")
+            //         .frame(maxWidth: .infinity)
+            //         .padding()
+            //         .background(Color.secondary.opacity(0.1))
+            //         .cornerRadius(8)
+            //         .foregroundColor(.primary)
+            // }
         }
         .padding()
     }

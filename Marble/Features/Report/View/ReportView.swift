@@ -49,37 +49,34 @@ struct ReportView: View {
                             }
                         }
                     }
-                    .padding(16)
-                    .background(Color(.systemBackground))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color(.systemGray6))
                     .cornerRadius(16)
-                    .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
                 }
 
                 // Time Spend
                 VStack(alignment: .leading, spacing: 8) {
+                    Text("Time Spend")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
                     HStack {
-                        Text("Time Spend")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                        Spacer()
                         Text("August")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    }
-                    
-                    // Week pills (static mock)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(["1-7", "8-14", "15-21", "22-30"], id: \.self) { week in
-                                Text(week)
-                                    .font(.subheadline)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
-                                    .background(week == "1-7" ? Color(red: 0.18, green: 0.83, blue: 0.75) : Color.secondary.opacity(0.1))
-                                    .foregroundColor(week == "1-7" ? .white : .primary)
-                                    .cornerRadius(8)
-                            }
+                        
+                        Spacer()
+                        
+                        // Week segmented picker
+                        Picker("Week", selection: .constant("1-7")) {
+                            Text("1-7").tag("1-7")
+                            Text("8-14").tag("8-14")
+                            Text("15-21").tag("15-21")
+                            Text("22-30").tag("22-30")
                         }
+                        .pickerStyle(.segmented)
+                        .fixedSize()
                     }
                     
                     WeeklyChartView(dailyData: viewModel.dailyData)
@@ -92,7 +89,7 @@ struct ReportView: View {
                         .fontWeight(.bold)
                     
                     VStack(spacing: 0) {
-                        let maxDuration = viewModel.appUsage.map { $0.duration }.max() ?? 1
+                        let maxDuration: TimeInterval = 12 * 3600
                         ForEach(viewModel.appUsage) { entry in
                             AppUsageRowView(entry: entry, maxDuration: maxDuration)
                             if entry.id != viewModel.appUsage.last?.id {
@@ -101,9 +98,8 @@ struct ReportView: View {
                         }
                     }
                     .padding(16)
-                    .background(Color(.systemBackground))
+                    .background(Color(.systemGray6))
                     .cornerRadius(16)
-                    .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
                 }
             }
             .padding()

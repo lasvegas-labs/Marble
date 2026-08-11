@@ -17,23 +17,22 @@ struct AppUsageRowView: View {
                 .frame(width: 32, height: 32)
                 .foregroundColor(.primary)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(entry.appName)
-                    .font(.subheadline)
+            Text(entry.appName)
+                .font(.subheadline)
+                .frame(width: 80, alignment: .leading)
 
-                GeometryReader { geometry in
-                    ZStack(alignment: .leading) {
-                        Capsule()
-                            .fill(Color.secondary.opacity(0.2))
-                            .frame(height: 8)
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.secondary.opacity(0.2))
+                        .frame(height: 8)
 
-                        Capsule()
-                            .fill(Color(red: 0.18, green: 0.83, blue: 0.75))
-                            .frame(width: max(0, geometry.size.width * CGFloat(entry.duration / maxDuration)), height: 8)
-                    }
+                    Capsule()
+                        .fill(Color(red: 0.18, green: 0.83, blue: 0.75))
+                        .frame(width: max(0, geometry.size.width * CGFloat(entry.duration / maxDuration)), height: 8)
                 }
-                .frame(height: 8)
             }
+            .frame(height: 8)
 
             Text(formattedDuration(entry.duration))
                 .font(.caption)

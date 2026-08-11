@@ -4,6 +4,7 @@
 //  Created by Marble on 11/08/26.
 //
 
+import Foundation
 import Combine
 
 final class ReportViewModel: ObservableObject {
@@ -31,13 +32,13 @@ final class ReportViewModel: ObservableObject {
         weeklyTotalSeconds = 19 * 3600 + 18 * 60 // 19h 18m
 
         dailyData = [
-            DailyScreenTime(day: "S", dayNumber: 1, hours: 2.5, isHighlighted: false),
-            DailyScreenTime(day: "W", dayNumber: 2, hours: 3.0, isHighlighted: false),
-            DailyScreenTime(day: "T", dayNumber: 3, hours: 2.8, isHighlighted: false),
-            DailyScreenTime(day: "T", dayNumber: 4, hours: 4.0, isHighlighted: true),
-            DailyScreenTime(day: "W", dayNumber: 5, hours: 3.2, isHighlighted: false),
-            DailyScreenTime(day: "M", dayNumber: 6, hours: 2.0, isHighlighted: false),
-            DailyScreenTime(day: "S", dayNumber: 7, hours: 1.5, isHighlighted: false),
+            DailyScreenTime(day: "S", dayNumber: 1, hours: 2.5, lastWeekHours: 2.0, isHighlighted: false),
+            DailyScreenTime(day: "M", dayNumber: 2, hours: 3.0, lastWeekHours: 2.5, isHighlighted: false),
+            DailyScreenTime(day: "T", dayNumber: 3, hours: 2.8, lastWeekHours: 3.5, isHighlighted: false),
+            DailyScreenTime(day: "W", dayNumber: 4, hours: 4.0, lastWeekHours: 3.2, isHighlighted: true),
+            DailyScreenTime(day: "T", dayNumber: 5, hours: 3.2, lastWeekHours: 2.8, isHighlighted: false),
+            DailyScreenTime(day: "F", dayNumber: 6, hours: 2.0, lastWeekHours: 3.0, isHighlighted: false),
+            DailyScreenTime(day: "S", dayNumber: 7, hours: 1.5, lastWeekHours: 2.0, isHighlighted: false),
         ]
 
         appUsage = [

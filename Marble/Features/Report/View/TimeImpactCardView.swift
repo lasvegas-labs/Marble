@@ -25,31 +25,30 @@ struct TimeImpactCardView: View {
             
             Spacer()
             
-            VStack(spacing: 4) {
-                Text("Your Grade:")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+            VStack(alignment: .trailing, spacing: 4) {
+                HStack(spacing: 4) {
+                    Text("Your Grade:")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Button(action: { showGradeTooltip = true }) {
+                        Image(systemName: "info.circle")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .popover(isPresented: $showGradeTooltip) {
+                        GradeTooltipView()
+                            .presentationCompactAdaptation(.popover)
+                    }
+                }
                 
-                Button(action: { showGradeTooltip = true }) {
-                    Text(grade.rawValue)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color(red: 0.18, green: 0.83, blue: 0.75))
-                        .frame(width: 48, height: 48)
-                        .overlay(
-                            Circle()
-                                .stroke(Color(red: 0.18, green: 0.83, blue: 0.75), lineWidth: 2)
-                        )
-                }
-                .popover(isPresented: $showGradeTooltip) {
-                    GradeTooltipView()
-                        .presentationCompactAdaptation(.sheet)
-                }
+                Text(grade.rawValue)
+                    .font(.system(size: 48, weight: .bold))
+                    .foregroundColor(Color(red: 0.18, green: 0.83, blue: 0.75))
             }
         }
         .padding(16)
-        .background(Color(.systemBackground))
+        .background(Color(.systemGray6))
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
     }
 }

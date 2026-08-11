@@ -14,14 +14,24 @@ struct WeeklyChartView: View {
         VStack(alignment: .leading, spacing: 16) {
             Chart {
                 ForEach(dailyData) { dataPoint in
+                    // Last Week
                     BarMark(
                         x: .value("Day", dataPoint.day),
-                        y: .value("Hours", dataPoint.hours)
+                        yStart: .value("Min", 0),
+                        yEnd: .value("Max", dataPoint.lastWeekHours)
                     )
-                    .foregroundStyle(dataPoint.isHighlighted ? Color(red: 0.18, green: 0.83, blue: 0.75) : Color.secondary.opacity(0.3))
+                    .foregroundStyle(Color.secondary.opacity(0.3))
+
+                    // This Week
+                    BarMark(
+                        x: .value("Day", dataPoint.day),
+                        yStart: .value("Min", 0),
+                        yEnd: .value("Max", dataPoint.hours)
+                    )
+                    .foregroundStyle(Color(red: 0.18, green: 0.83, blue: 0.75))
                     .annotation(position: .top) {
                         if dataPoint.isHighlighted {
-                            Text("\(Int(dataPoint.hours))hr")
+                            Text("\(Int(dataPoint.hours))h")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -29,33 +39,44 @@ struct WeeklyChartView: View {
                 }
             }
             .chartYAxis(.hidden)
+            .chartLegend(.hidden)
             .frame(height: 150)
 
-            HStack {
-                VStack(alignment: .leading) {
-                    HStack(spacing: 4) {
+            VStack(spacing: 8) {
+                HStack {
+                    HStack(spacing: 8) {
                         Circle()
                             .fill(Color(red: 0.18, green: 0.83, blue: 0.75))
                             .frame(width: 8, height: 8)
-                        Text("Most Distracting: Tuesday")
+                        Text("This Week")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    HStack(spacing: 4) {
+                    HStack(spacing: 8) {
                         Circle()
                             .fill(Color.secondary.opacity(0.3))
                             .frame(width: 8, height: 8)
-                        Text("Most Productive: Wednesday")
+                        Text("Last Week")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    Spacer()
                 }
-                Spacer()
+
+                HStack {
+                    Text("Most Distracting: Tuesday")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("Most Productive: Wednesday")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
+            .padding(.top, 16)
         }
         .padding(16)
-        .background(Color(.systemBackground))
+        .background(Color(.systemGray6))
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
     }
 }

@@ -11,6 +11,7 @@ struct DailyScreenTime: Identifiable {
     let day: String
     let dayNumber: Int
     let hours: Double
+    let lastWeekHours: Double
     let isHighlighted: Bool
 }
 

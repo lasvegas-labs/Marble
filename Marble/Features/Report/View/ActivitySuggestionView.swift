@@ -12,11 +12,11 @@ struct ActivitySuggestionView: View {
     var body: some View {
         HStack(spacing: 12) {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(red: 0.18, green: 0.83, blue: 0.75).opacity(0.1))
+                .fill(Color.white.opacity(0.1))
                 .frame(width: 40, height: 40)
                 .overlay {
                     Image(systemName: suggestion.iconName)
-                        .foregroundColor(Color(red: 0.18, green: 0.83, blue: 0.75))
+                        .foregroundColor(.black)
                 }
 
             VStack(alignment: .leading, spacing: 2) {
@@ -31,6 +31,6 @@ struct ActivitySuggestionView: View {
 
             Spacer()
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 4)
     }
 }
