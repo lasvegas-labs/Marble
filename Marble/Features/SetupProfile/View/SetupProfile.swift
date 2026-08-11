@@ -32,14 +32,8 @@ struct SetupProfileView: View {
 
             continueButton
         }
-        .background(Color(.systemBackground))
-        .toolbarVisibility(.hidden, for: .navigationBar)
-        .familyActivityPicker(
-            headerText: "Choose the apps and categories that distract you most.",
-            footerText: "Marble only receives privacy-preserving tokens for your selection.",
-            isPresented: $viewModel.isActivityPickerPresented,
-            selection: $viewModel.activitySelection
-        )
+        .background(viewModel.currentStep == .distractingApps ? Color(uiColor: .systemGroupedBackground) : Color(.systemBackground))
+        .toolbar(.hidden, for: .navigationBar)
         .alert(
             "Setup Profile",
             isPresented: Binding(
@@ -61,11 +55,13 @@ struct SetupProfileView: View {
             HStack(spacing: 12) {
                 Button(action: backAction) {
                     Image(systemName: "chevron.left")
-                        .font(.headline)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.primary)
                         .frame(width: 42, height: 42)
+                        .background(Color(uiColor: .systemGray6))
+                        .clipShape(Circle())
                 }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
+                .buttonStyle(.plain)
                 .accessibilityLabel(
                     viewModel.currentStep == .gender
                         ? "Back to introduction"
@@ -127,6 +123,20 @@ struct SetupProfileView: View {
 
     @ViewBuilder
     private var continueButton: some View {
+        if #available(iOS 26, *) {
+            continueButtonContent
+                .buttonStyle(.glass)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        } else {
+            continueButtonContent
+                .buttonStyle(.bordered)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }
+    }
+
+    private var continueButtonContent: some View {
         Button(action: continueAction) {
             HStack(spacing: 8) {
                 if viewModel.isWorking {
@@ -139,9 +149,6 @@ struct SetupProfileView: View {
         }
         .disabled(viewModel.isWorking)
         .controlSize(.extraLarge)
-        .buttonStyle(.glass)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
     }
 
     private var continueButtonTitle: String {

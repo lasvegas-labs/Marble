@@ -152,38 +152,6 @@ enum FocusWeekday: Int, CaseIterable, Codable, Identifiable {
     }
 }
 
-enum OrbPersona: String, CaseIterable, Codable, Identifiable {
-    case gentle
-    case passiveAggressive
-    case blunt
-
-    var id: Self { self }
-
-    var title: String {
-        switch self {
-        case .gentle: "Gentle"
-        case .passiveAggressive: "Passive Aggressive"
-        case .blunt: "Blunt"
-        }
-    }
-
-    var index: Double {
-        switch self {
-        case .gentle: 0
-        case .passiveAggressive: 1
-        case .blunt: 2
-        }
-    }
-
-    init(index: Double) {
-        switch Int(index.rounded()) {
-        case 0: self = .gentle
-        case 1: self = .passiveAggressive
-        default: self = .blunt
-        }
-    }
-}
-
 @Model
 final class SetupProfileModel {
     var id: UUID

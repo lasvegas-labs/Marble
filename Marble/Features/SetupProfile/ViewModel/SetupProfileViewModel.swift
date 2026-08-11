@@ -17,7 +17,7 @@ final class SetupProfileViewModel: ObservableObject {
     @Published var focusStartTime: Date
     @Published var focusEndTime: Date
     @Published var selectedWeekdays: Set<FocusWeekday>
-    @Published var orbPersona: OrbPersona
+    @Published var orbPersonality: OrbPersonality
     @Published var isActivityPickerPresented = false
     @Published private(set) var isWorking = false
     @Published var errorMessage: String?
@@ -79,8 +79,8 @@ final class SetupProfileViewModel: ObservableObject {
             selectedWeekdays = [.monday, .tuesday, .wednesday, .thursday, .friday]
         }
 
-        orbPersona = model.orbPersonaRawValue
-            .flatMap(OrbPersona.init(rawValue:)) ?? .gentle
+        orbPersonality = model.orbPersonaRawValue
+            .flatMap(OrbPersonality.init(rawValue:)) ?? .defaultValue
     }
 
     var stepNumber: Int { currentStep.rawValue + 1 }
@@ -299,7 +299,10 @@ final class SetupProfileViewModel: ObservableObject {
         }
 
         if currentStep == .orbPersona {
-            model.orbPersonaRawValue = personaSkipped ? nil : orbPersona.rawValue
+            model.orbPersonaRawValue = personaSkipped ? nil : orbPersonality.rawValue
+            if !personaSkipped {
+                UserDefaults.standard.set(orbPersonality.rawValue, forKey: "orbPersonality")
+            }
         }
     }
 

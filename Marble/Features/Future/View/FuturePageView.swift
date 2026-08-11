@@ -109,10 +109,33 @@ struct FuturePageView: View {
         }
     }
     
-    private func cardView() -> some View {
-        VStack(spacing: 28) {
+    private func cardView(index: Int) -> some View {
+        let title: String
+        let iconName: String
+        let subtitle: String
+        let description: String
+        
+        switch index {
+        case 0:
+            title = "2,050 H - 85 D"
+            iconName = "brain.head.profile"
+            subtitle = "FOCUS"
+            description = "Loss of Concentration & Learning Ability"
+        case 2:
+            title = "1,520 H - 63 D"
+            iconName = "person.2.fill"
+            subtitle = "SOCIAL"
+            description = "Missed Real-life Interactions"
+        default: // Index 1
+            title = "3,008 H - 125 D"
+            iconName = "moon.fill"
+            subtitle = "SLEEP"
+            description = "Shorter Duration & Poorer Quality"
+        }
+        
+        return VStack(spacing: 28) {
             VStack(spacing: 4) {
-                Text("3.008 H - 125 D")
+                Text(title)
                     .font(.system(.headline, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
@@ -122,18 +145,18 @@ struct FuturePageView: View {
                     .foregroundColor(.secondary)
             }
             
-            Image(systemName: "moon.fill")
+            Image(systemName: iconName)
                 .font(.system(size: 88))
                 .foregroundColor(.primary)
                 .padding(.vertical, 4)
             
             VStack(spacing: 8) {
-                Text("SLEEP")
+                Text(subtitle)
                     .font(.system(.title2, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                 
-                Text("Shorter Duration & Poorer Quality")
+                Text(description)
                     .font(.system(.caption, design: .rounded))
                     .fontWeight(.bold)
                     .foregroundColor(.secondary)
@@ -193,7 +216,7 @@ struct FuturePageView: View {
     }
     
     private func cardContainer(index: Int) -> some View {
-        let distance = CGFloat(index - currentIndex) - (dragOffset / 295)
+        let distance = CGFloat(index - currentIndex) + (dragOffset / 295)
         let scale = 1.0 - min(abs(distance) * 0.12, 0.15)
         let xOffset = distance * 215
         let opacity = 1.0 - min(abs(distance) * 0.5, 0.6)
@@ -217,7 +240,7 @@ struct FuturePageView: View {
                 .blur(radius: 35)
                 .opacity(1.0 - min(abs(distance) * 0.8, 1.0))
                 
-            cardView()
+            cardView(index: index)
                 .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 4) // Grounding physical shadow
                 .shadow(color: viewModel.personaColor.opacity(0.18), radius: 25, x: 0, y: 12) // Colored glow shadow
         }
