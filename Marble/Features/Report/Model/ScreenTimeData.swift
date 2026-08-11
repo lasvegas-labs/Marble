@@ -8,8 +8,7 @@ import Foundation
 
 struct DailyScreenTime: Identifiable {
     let id = UUID()
-    let day: String
-    let dayNumber: Int
+    let date: Date
     let hours: Double
     let lastWeekHours: Double
     let isHighlighted: Bool

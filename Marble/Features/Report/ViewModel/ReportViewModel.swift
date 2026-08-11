@@ -8,10 +8,16 @@ import Combine
 
 final class ReportViewModel: ObservableObject {
     @Published var weeklyTotalSeconds: TimeInterval
-    @Published var dailyData: [DailyScreenTime]
+    @Published var dailyData: [DailyScreenTime] = []
     @Published var appUsage: [AppUsageEntry]
     @Published var suggestions: [ActivitySuggestion]
     @Published var showGradeTooltip = false
+
+    @Published var selectedStartDate: Date = Calendar.current.startOfDay(for: Date().addingTimeInterval(-6 * 86400)) {
+        didSet {
+            generateDailyData()
+        }
+    }
 
     var grade: GradeLevel {
         GradeLevel.grade(for: weeklyTotalHours)
@@ -29,16 +35,6 @@ final class ReportViewModel: ObservableObject {
 
     init() {
         weeklyTotalSeconds = 19 * 3600 + 18 * 60 // 19h 18m
-
-        dailyData = [
-            DailyScreenTime(day: "S", dayNumber: 1, hours: 2.5, lastWeekHours: 2.0, isHighlighted: false),
-            DailyScreenTime(day: "M", dayNumber: 2, hours: 3.0, lastWeekHours: 2.5, isHighlighted: false),
-            DailyScreenTime(day: "T", dayNumber: 3, hours: 2.8, lastWeekHours: 3.5, isHighlighted: false),
-            DailyScreenTime(day: "W", dayNumber: 4, hours: 4.0, lastWeekHours: 3.2, isHighlighted: true),
-            DailyScreenTime(day: "T", dayNumber: 5, hours: 3.2, lastWeekHours: 2.8, isHighlighted: false),
-            DailyScreenTime(day: "F", dayNumber: 6, hours: 2.0, lastWeekHours: 3.0, isHighlighted: false),
-            DailyScreenTime(day: "S", dayNumber: 7, hours: 1.5, lastWeekHours: 2.0, isHighlighted: false),
-        ]
 
         appUsage = [
             AppUsageEntry(appName: "Discord", iconName: "message.fill", duration: 8 * 3600 + 3 * 60),
@@ -71,11 +67,36 @@ final class ReportViewModel: ObservableObject {
                 subtitle: "Drawing, guitar, cooking, photography"
             ),
         ]
+        
+        generateDailyData()
     }
 
     func formattedDuration(_ duration: TimeInterval) -> String {
         let hours = Int(duration) / 3600
         let minutes = (Int(duration) % 3600) / 60
         return "\(hours)h \(minutes)m"
+    }
+
+    private func generateDailyData() {
+        var data: [DailyScreenTime] = []
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: selectedStartDate)
+        
+        let mockHours: [Double] = [2.5, 3.0, 2.8, 4.0, 3.2, 2.0, 1.5]
+        let mockLastWeek: [Double] = [2.0, 2.5, 3.5, 3.2, 2.8, 3.0, 2.0]
+        
+        for i in 0..<7 {
+            if let date = calendar.date(byAdding: .day, value: i, to: start) {
+                let isHighlighted = (i == 3) // Just mock highlight for demo
+                data.append(DailyScreenTime(
+                    date: date,
+                    hours: mockHours[i],
+                    lastWeekHours: mockLastWeek[i],
+                    isHighlighted: isHighlighted
+                ))
+            }
+        }
+        
+        self.dailyData = data
     }
 }

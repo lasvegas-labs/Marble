@@ -16,18 +16,20 @@ struct WeeklyChartView: View {
                 ForEach(dailyData) { dataPoint in
                     // Background Bar (Total Height = Last Week + This Week) -> Gray
                     BarMark(
-                        x: .value("Day", dataPoint.day),
+                        x: .value("Day", dataPoint.date, unit: .day),
                         yStart: .value("Min", 0),
-                        yEnd: .value("Max", dataPoint.hours + dataPoint.lastWeekHours)
+                        yEnd: .value("Max", dataPoint.hours + dataPoint.lastWeekHours),
+                        width: .fixed(24)
                     )
                     .foregroundStyle(Color.secondary.opacity(0.3))
                     .cornerRadius(8)
 
                     // Foreground Bar (This Week) -> Green
                     BarMark(
-                        x: .value("Day", dataPoint.day),
+                        x: .value("Day", dataPoint.date, unit: .day),
                         yStart: .value("Min", 0),
-                        yEnd: .value("Max", dataPoint.hours)
+                        yEnd: .value("Max", dataPoint.hours),
+                        width: .fixed(24)
                     )
                     .foregroundStyle(Color(red: 0.18, green: 0.83, blue: 0.75))
                     .cornerRadius(8)
@@ -40,9 +42,25 @@ struct WeeklyChartView: View {
                     }
                 }
             }
-            .chartYAxis(.hidden)
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day)) { value in
+                    if let date = value.as(Date.self) {
+                        AxisValueLabel {
+                            Text(date, format: .dateTime.day().month())
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading) {
+                    AxisGridLine()
+                    AxisValueLabel()
+                }
+            }
             .chartLegend(.hidden)
-            .frame(height: 150)
+            .frame(height: 220)
 
             VStack(spacing: 8) {
                 HStack {

@@ -1,8 +1,3 @@
-//
-//  ReportView.swift
-//  Created by Marble on 11/08/26.
-//
-
 import SwiftUI
 
 struct ReportView: View {
@@ -61,21 +56,14 @@ struct ReportView: View {
                         .fontWeight(.bold)
                     
                     HStack {
-                        Text("August")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        
                         Spacer()
                         
-                        // Week segmented picker
-                        Picker("Week", selection: .constant("1-7")) {
-                            Text("1-7").tag("1-7")
-                            Text("8-14").tag("8-14")
-                            Text("15-21").tag("15-21")
-                            Text("22-30").tag("22-30")
-                        }
-                        .pickerStyle(.segmented)
-                        .fixedSize()
+                        DatePicker(
+                            "Select Week Start",
+                            selection: $viewModel.selectedStartDate,
+                            displayedComponents: .date
+                        )
+                        .labelsHidden()
                     }
                     
                     WeeklyChartView(dailyData: viewModel.dailyData)

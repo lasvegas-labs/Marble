@@ -1,8 +1,3 @@
-//
-//  ReportRouteBuilder.swift
-//  Created by Marble on 11/08/26.
-//
-
 import SwiftUI
 
 struct ReportRouteBuilder {
