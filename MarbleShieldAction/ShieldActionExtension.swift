@@ -5,6 +5,7 @@ import UserNotifications
 
 public enum MarbleShieldState: String, Codable {
     case friction
+    case fifteenMinuteThreshold
     case waitingForNotification
     case focusActive
 }
@@ -111,21 +112,18 @@ class ShieldActionExtension: ShieldActionDelegate {
         let currentState = ShieldStateManager.shared.currentState
         
         switch currentState {
-        case .friction:
-            // User tapped "Show The Recommendation"
-            // Schedule the notification and transition to waitingForNotification without closing the shield
+        case .friction, .fifteenMinuteThreshold:
+            // User tapped "Show The Recommendation" from initial friction or 15-minute threshold
             sendRecommendationNotification()
             ShieldStateManager.shared.currentState = .waitingForNotification
             completionHandler(.defer)
             
         case .waitingForNotification:
             // User tapped "Didn't See The Notification"
-            // Check Focus status using public Apple API
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
                 ShieldStateManager.shared.currentState = .focusActive
             } else {
-                // Focus is OFF: Resend notification and keep waiting state
                 sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
             }
@@ -133,13 +131,10 @@ class ShieldActionExtension: ShieldActionDelegate {
             
         case .focusActive:
             // User tapped "Try Again"
-            // Recheck Focus status
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
-                // Focus still active: maintain focus explanation
                 ShieldStateManager.shared.currentState = .focusActive
             } else {
-                // Focus now OFF: resend notification and return to waiting state
                 sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
             }

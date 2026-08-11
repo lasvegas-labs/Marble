@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */; };
+		E1A00001234567890000000C /* MarbleDeviceActivityMonitor.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */; };
+		E1A00001234567890000000A /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */; };
+		E1A00001234567890000000B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
 		CC1234560001234500ABCDEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC1234560001234400ABCDEF /* Assets.xcassets */; };
 		4EF06D4B3C4D5CA522A1C182 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9187DEBB9FA2AD21728F736 /* ShieldConfigurationExtension.swift */; };
 		9E8243745208FF5D90044DEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
@@ -26,6 +29,7 @@
 			files = (
 				2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */,
 				C0BDF0214D4FEC941BD9982C /* MarbleShieldAction.appex in Embed App Extensions */,
+				E1A00001234567890000000C /* MarbleDeviceActivityMonitor.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -34,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		CC1234560001234400ABCDEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleDeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
 		009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		61589542DE69628CE4A71B25 /* Marble.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Marble.entitlements; sourceTree = "<group>"; };
@@ -76,6 +82,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A000012345678900000007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1A00001234567890000000B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -105,6 +119,7 @@
 				95EC699291C5D91D5E70E5FD /* Frameworks */,
 				1BA19ADB3903E6DA856805E9 /* MarbleShieldConfiguration */,
 				E86BD15755839EEA864DC4AE /* MarbleShieldAction */,
+				E1A00001234567890000000D /* MarbleDeviceActivityMonitor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,8 +129,17 @@
 				9F2B623A3029825D00345B7B /* Marble.app */,
 				009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */,
 				3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */,
+				E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E1A00001234567890000000D /* MarbleDeviceActivityMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */,
+			);
+			path = MarbleDeviceActivityMonitor;
 			sourceTree = "<group>";
 		};
 		E86BD15755839EEA864DC4AE /* MarbleShieldAction */ = {
@@ -195,6 +219,23 @@
 			productReference = 3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		E1A000012345678900000001 /* MarbleDeviceActivityMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1A000012345678900000002 /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityMonitor" */;
+			buildPhases = (
+				E1A000012345678900000006 /* Sources */,
+				E1A000012345678900000007 /* Frameworks */,
+				E1A000012345678900000008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarbleDeviceActivityMonitor;
+			productName = MarbleDeviceActivityMonitor;
+			productReference = E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -235,6 +276,7 @@
 				9F2B62393029825D00345B7B /* Marble */,
 				F26E92991EEA1CAD9CCF7CA1 /* MarbleShieldConfiguration */,
 				FF7E781787226B5E8E5EE76D /* MarbleShieldAction */,
+				E1A000012345678900000001 /* MarbleDeviceActivityMonitor */,
 			);
 		};
 /* End PBXProject section */
@@ -262,6 +304,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A000012345678900000008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -285,6 +334,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7FFF1A496B41E8C60B37048 /* ShieldActionExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1A000012345678900000006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1A00001234567890000000A /* DeviceActivityMonitorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +649,58 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E1A000012345678900000002 /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1A000012345678900000004 /* Release */,
+				E1A000012345678900000003 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1A000012345678900000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityMonitor/MarbleDeviceActivityMonitor.entitlements;
+				DEVELOPMENT_TEAM = QH8QAGW526;
+				INFOPLIST_FILE = MarbleDeviceActivityMonitor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleDeviceActivityMonitor;
+				PRODUCT_NAME = MarbleDeviceActivityMonitor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E1A000012345678900000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityMonitor/MarbleDeviceActivityMonitor.entitlements;
+				DEVELOPMENT_TEAM = QH8QAGW526;
+				INFOPLIST_FILE = MarbleDeviceActivityMonitor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleDeviceActivityMonitor;
+				PRODUCT_NAME = MarbleDeviceActivityMonitor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 		9F2B62353029825D00345B7B /* Build configuration list for PBXProject "Marble" */ = {
 			isa = XCConfigurationList;
