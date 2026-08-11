@@ -31,15 +31,9 @@ struct SettingsView: View {
                     settingsNavRow(icon: "person", label: "Edit your profile")
                     Divider().padding(.leading, 64)
                     settingsNavRow(icon: "square.3.layers.3d", label: "Edit your choosen apps") {
-                        if screenTime.hasAuthorization {
-                            isPickerPresented = true
-                        } else {
-                            Task {
-                                await screenTime.requestAuthorizationAsync()
-                                if screenTime.hasAuthorization {
-                                    isPickerPresented = true
-                                }
-                            }
+                        isPickerPresented = true
+                        if !screenTime.hasAuthorization {
+                            screenTime.requestAuthorization()
                         }
                     }
                     Divider().padding(.leading, 64)
