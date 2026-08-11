@@ -1,18 +1,24 @@
-//
-//  SetupProfileRouteBuilder.swift
-//  Marble
-//
-//  Created by Sande Effendi on 11/08/26.
-//
-
+import SwiftData
 import SwiftUI
 
 struct SetupProfileRouteBuilder {
     @ViewBuilder
-    static func build(_ route: SetupProfileRoute) -> some View {
+    static func build(
+        _ route: SetupProfileRoute,
+        modelContext: ModelContext,
+        onComplete: @escaping () -> Void,
+        onBackToIntroduction: @escaping () -> Void
+    ) -> some View {
         switch route {
         case .main:
-            SetupProfileView(viewModel: SetupProfileViewModel())
+            SetupProfileView(
+                viewModel: SetupProfileViewModel(
+                    modelContext: modelContext,
+                    screenTimeService: ScreenTimeService()
+                ),
+                onComplete: onComplete,
+                onBackToIntroduction: onBackToIntroduction
+            )
         }
     }
 }

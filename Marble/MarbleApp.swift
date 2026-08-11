@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MarbleApp: App {
@@ -51,6 +52,7 @@ struct MarbleApp: App {
                 }
             }
         }
+        .modelContainer(for: SetupProfileModel.self)
     }
 
     private func beginHandoff() {
