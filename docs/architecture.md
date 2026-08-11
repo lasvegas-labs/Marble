@@ -9,9 +9,11 @@ Marble/
     <Feature>/
       Model/
       Router/
+      Service/            # optional feature-owned Apple/system integrations
       View/
       ViewModel/
   Core/                # future generic extensions and helpers only
+MarbleDeviceActivityMonitor/ # Screen Time enforcement extension
 ```
 
 ## Ownership
@@ -20,6 +22,7 @@ Marble/
 - A feature owns its models, route enum/builder, views, view models, and any feature-specific service needed by real data.
 - Features do not depend directly on other features. Navigate through `AppRoute` instead.
 - `Core` is reserved for generic, cross-app extensions and helpers. Create it only when such code actually exists; do not commit placeholder files or directories.
+- The app and Device Activity extension share only opaque Screen Time selections through their configured App Group.
 
 ## Dependencies
 
