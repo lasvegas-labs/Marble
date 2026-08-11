@@ -5,6 +5,11 @@
 //
 
 import Combine
+import Foundation
+
+extension Notification.Name {
+    static let openRecommendation = Notification.Name("MarbleOpenRecommendation")
+}
 
 final class AppRouter: ObservableObject {
     @Published var path: [AppRoute] = []
@@ -38,5 +43,14 @@ final class AppRouter: ObservableObject {
 
     func dismissSheet() {
         presentedSheet = nil
+    }
+
+    func navigateToRecommendation() {
+        // Dismiss any presented sheet first
+        presentedSheet = nil
+        // Push recommendation screen if not already visible
+        if path.last != .recommendation {
+            push(.recommendation)
+        }
     }
 }
