@@ -7,20 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17F361AA302C171B0020876C /* MarbleDeviceActivityReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */; };
-		E1A00001234567890000000C /* MarbleDeviceActivityMonitor.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */; };
-		E1A00001234567890000000A /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */; };
-		E1A00001234567890000000B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
-		CC1234560001234500ABCDEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC1234560001234400ABCDEF /* Assets.xcassets */; };
 		4EF06D4B3C4D5CA522A1C182 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9187DEBB9FA2AD21728F736 /* ShieldConfigurationExtension.swift */; };
 		9E8243745208FF5D90044DEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
 		A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */ = {isa = PBXBuildFile; productRef = A47C1D0D30A1000100A1B2C3 /* Orb */; };
 		AF2607659A14BC1E52FD3D31 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
 		C0BDF0214D4FEC941BD9982C /* MarbleShieldAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */; };
+		CC1234560001234500ABCDEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC1234560001234400ABCDEF /* Assets.xcassets */; };
 		D7FFF1A496B41E8C60B37048 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C3C61F3227503BCCE6C45 /* ShieldActionExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		17F361A8302C171B0020876C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F2B62323029825D00345B7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17F3619D302C171B0020876C;
+			remoteInfo = MarbleDeviceActivityReport;
+		};
 		A47C1D3130A3000100A1B2C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9F2B62323029825D00345B7B /* Project object */;
@@ -31,6 +36,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		17F361AF302C171B0020876C /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				17F361AA302C171B0020876C /* MarbleDeviceActivityReport.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6E5EDD5252E9A053F9BA38E5 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,7 +55,6 @@
 			files = (
 				2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */,
 				C0BDF0214D4FEC941BD9982C /* MarbleShieldAction.appex in Embed App Extensions */,
-				E1A00001234567890000000C /* MarbleDeviceActivityMonitor.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,10 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CC1234560001234400ABCDEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleDeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
 		009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = MarbleDeviceActivityReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		61589542DE69628CE4A71B25 /* Marble.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Marble.entitlements; sourceTree = "<group>"; };
 		7E0C3C61F3227503BCCE6C45 /* ShieldActionExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShieldActionExtension.swift; sourceTree = "<group>"; };
@@ -58,9 +71,28 @@
 		A47C1D3030A3000100A1B2C3 /* MarbleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarbleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B30943180B5D674F063CC867 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B9187DEBB9FA2AD21728F736 /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
+		CC1234560001234400ABCDEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		17F361AB302C171B0020876C /* Exceptions for "MarbleDeviceActivityReport" folder in "MarbleDeviceActivityReport" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		17F3619F302C171B0020876C /* MarbleDeviceActivityReport */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				17F361AB302C171B0020876C /* Exceptions for "MarbleDeviceActivityReport" folder in "MarbleDeviceActivityReport" target */,
+			);
+			path = MarbleDeviceActivityReport;
+			sourceTree = "<group>";
+		};
 		9F2B623C3029825D00345B7B /* Marble */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Marble;
@@ -74,18 +106,18 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17F3619B302C171B0020876C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F2B62373029825D00345B7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A47C1D0E30A1000100A1B2C3 /* Orb in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A47C1D3430A3000100A1B2C3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,19 +129,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A47C1D3430A3000100A1B2C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EFAAA0A554D5DF86B771B204 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9E8243745208FF5D90044DEB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1A000012345678900000007 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1A00001234567890000000B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,13 +168,13 @@
 			isa = PBXGroup;
 			children = (
 				9F2B623C3029825D00345B7B /* Marble */,
+				17F3619F302C171B0020876C /* MarbleDeviceActivityReport */,
 				A47C1D3230A3000100A1B2C3 /* MarbleTests */,
 				9F2B623B3029825D00345B7B /* Products */,
 				61589542DE69628CE4A71B25 /* Marble.entitlements */,
 				95EC699291C5D91D5E70E5FD /* Frameworks */,
 				1BA19ADB3903E6DA856805E9 /* MarbleShieldConfiguration */,
 				E86BD15755839EEA864DC4AE /* MarbleShieldAction */,
-				E1A00001234567890000000D /* MarbleDeviceActivityMonitor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,17 +185,9 @@
 				A47C1D3030A3000100A1B2C3 /* MarbleTests.xctest */,
 				009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */,
 				3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */,
-				E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */,
+				17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E1A00001234567890000000D /* MarbleDeviceActivityMonitor */ = {
-			isa = PBXGroup;
-			children = (
-				E1A000012345678900000009 /* DeviceActivityMonitorExtension.swift */,
-			);
-			path = MarbleDeviceActivityMonitor;
 			sourceTree = "<group>";
 		};
 		E86BD15755839EEA864DC4AE /* MarbleShieldAction */ = {
@@ -186,6 +209,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17F3619D302C171B0020876C /* MarbleDeviceActivityReport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F361AC302C171B0020876C /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityReport" */;
+			buildPhases = (
+				17F3619A302C171B0020876C /* Sources */,
+				17F3619B302C171B0020876C /* Frameworks */,
+				17F3619C302C171B0020876C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17F3619F302C171B0020876C /* MarbleDeviceActivityReport */,
+			);
+			name = MarbleDeviceActivityReport;
+			productName = MarbleDeviceActivityReport;
+			productReference = 17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		9F2B62393029825D00345B7B /* Marble */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F2B62453029825E00345B7B /* Build configuration list for PBXNativeTarget "Marble" */;
@@ -194,10 +237,12 @@
 				9F2B62373029825D00345B7B /* Frameworks */,
 				9F2B62383029825D00345B7B /* Resources */,
 				6E5EDD5252E9A053F9BA38E5 /* Embed App Extensions */,
+				17F361AF302C171B0020876C /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				17F361A9302C171B0020876C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9F2B623C3029825D00345B7B /* Marble */,
@@ -267,23 +312,6 @@
 			productReference = 3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		E1A000012345678900000001 /* MarbleDeviceActivityMonitor */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E1A000012345678900000002 /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityMonitor" */;
-			buildPhases = (
-				E1A000012345678900000006 /* Sources */,
-				E1A000012345678900000007 /* Frameworks */,
-				E1A000012345678900000008 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MarbleDeviceActivityMonitor;
-			productName = MarbleDeviceActivityMonitor;
-			productReference = E1A000012345678900000005 /* MarbleDeviceActivityMonitor.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -291,9 +319,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					17F3619D302C171B0020876C = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					9F2B62393029825D00345B7B = {
 						CreatedOnToolsVersion = 26.3;
 						SystemCapabilities = {
@@ -329,12 +360,19 @@
 				A47C1D3730A3000100A1B2C3 /* MarbleTests */,
 				F26E92991EEA1CAD9CCF7CA1 /* MarbleShieldConfiguration */,
 				FF7E781787226B5E8E5EE76D /* MarbleShieldAction */,
-				E1A000012345678900000001 /* MarbleDeviceActivityMonitor */,
+				17F3619D302C171B0020876C /* MarbleDeviceActivityReport */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17F3619C302C171B0020876C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49FC7CF34063634EDCEB6AF0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -364,16 +402,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1A000012345678900000008 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		17F3619A302C171B0020876C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		377CE260842A98CD484158B7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,17 +442,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1A000012345678900000006 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1A00001234567890000000A /* DeviceActivityMonitorExtension.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		17F361A9302C171B0020876C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
+			targetProxy = 17F361A8302C171B0020876C /* PBXContainerItemProxy */;
+		};
 		A47C1D3830A3000100A1B2C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9F2B62393029825D00345B7B /* Marble */;
@@ -423,51 +458,63 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		A47C1D3930A3000100A1B2C3 /* Debug */ = {
+		17F361AD302C171B0020876C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityReport/MarbleDeviceActivityReport.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_FILE = MarbleDeviceActivityReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarbleDeviceActivityReport;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.MarblefahmiTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleDeviceActivityReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = NO;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Marble.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Marble";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		A47C1D3A30A3000100A1B2C3 /* Release */ = {
+		17F361AE302C171B0020876C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityReport/MarbleDeviceActivityReport.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_FILE = MarbleDeviceActivityReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarbleDeviceActivityReport;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.MarblefahmiTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleDeviceActivityReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = NO;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Marble.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Marble";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -476,10 +523,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldAction/MarbleShieldAction.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				INFOPLIST_FILE = MarbleShieldAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldAction;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleShieldAction;
 				PRODUCT_NAME = MarbleShieldAction;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -497,10 +544,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldAction/MarbleShieldAction.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				INFOPLIST_FILE = MarbleShieldAction/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldAction;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleShieldAction;
 				PRODUCT_NAME = MarbleShieldAction;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -641,21 +688,21 @@
 				CODE_SIGN_ENTITLEMENTS = Marble/Marble.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -679,21 +726,21 @@
 				CODE_SIGN_ENTITLEMENTS = Marble/Marble.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -709,15 +756,63 @@
 			};
 			name = Release;
 		};
+		A47C1D3930A3000100A1B2C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.MarblejordanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Marble.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Marble";
+			};
+			name = Debug;
+		};
+		A47C1D3A30A3000100A1B2C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.MarblejordanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Marble.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Marble";
+			};
+			name = Release;
+		};
 		B4D28679A0284B56058D173D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldConfiguration/MarbleShieldConfiguration.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				INFOPLIST_FILE = MarbleShieldConfiguration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldConfiguration;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleShieldConfiguration;
 				PRODUCT_NAME = MarbleShieldConfiguration;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -735,10 +830,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = MarbleShieldConfiguration/MarbleShieldConfiguration.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
 				INFOPLIST_FILE = MarbleShieldConfiguration/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleShieldConfiguration;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleShieldConfiguration;
 				PRODUCT_NAME = MarbleShieldConfiguration;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -755,20 +850,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A47C1D3B30A3000100A1B2C3 /* Build configuration list for PBXNativeTarget "MarbleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A47C1D3930A3000100A1B2C3 /* Debug */,
-				A47C1D3A30A3000100A1B2C3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		173E4419B47BA57B97FCA800 /* Build configuration list for PBXNativeTarget "MarbleShieldConfiguration" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF5AA6AA847CFDC46CA3A226 /* Release */,
 				B4D28679A0284B56058D173D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17F361AC302C171B0020876C /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityReport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F361AD302C171B0020876C /* Debug */,
+				17F361AE302C171B0020876C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -781,58 +876,6 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
-		};
-		E1A000012345678900000002 /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityMonitor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E1A000012345678900000004 /* Release */,
-				E1A000012345678900000003 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E1A000012345678900000003 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityMonitor/MarbleDeviceActivityMonitor.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
-				INFOPLIST_FILE = MarbleDeviceActivityMonitor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleDeviceActivityMonitor;
-				PRODUCT_NAME = MarbleDeviceActivityMonitor;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		E1A000012345678900000004 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityMonitor/MarbleDeviceActivityMonitor.entitlements;
-				DEVELOPMENT_TEAM = QH8QAGW526;
-				INFOPLIST_FILE = MarbleDeviceActivityMonitor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblefahmi.MarbleDeviceActivityMonitor;
-				PRODUCT_NAME = MarbleDeviceActivityMonitor;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		9F2B62353029825D00345B7B /* Build configuration list for PBXProject "Marble" */ = {
 			isa = XCConfigurationList;
@@ -848,6 +891,15 @@
 			buildConfigurations = (
 				9F2B62463029825E00345B7B /* Debug */,
 				9F2B62473029825E00345B7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A47C1D3B30A3000100A1B2C3 /* Build configuration list for PBXNativeTarget "MarbleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A47C1D3930A3000100A1B2C3 /* Debug */,
+				A47C1D3A30A3000100A1B2C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

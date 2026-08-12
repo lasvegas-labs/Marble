@@ -76,6 +76,9 @@ struct SettingsView: View {
         .onAppear {
             screenTime.checkAuthorizationStatus()
         }
+        .onChange(of: screenTime.selectionToDiscourage) { _ in
+            screenTime.applyShield()
+        }
     }
 }
 
