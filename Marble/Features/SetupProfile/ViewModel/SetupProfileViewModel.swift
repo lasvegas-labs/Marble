@@ -2,6 +2,7 @@ import Combine
 import FamilyControls
 import Foundation
 import SwiftData
+import UserNotifications
 
 @MainActor
 final class SetupProfileViewModel: ObservableObject {
@@ -136,6 +137,9 @@ final class SetupProfileViewModel: ObservableObject {
         switch currentStep {
         case .screenTimePermission:
             permissionStatus = await screenTimeService.requestAuthorization()
+            return persist(nextStep: .timeLostCalculation)
+
+        case .timeSavedEffect:
             let nextStep: SetupProfileStep = permissionStatus.isApproved
                 ? .distractingApps
                 : .orbPersona
@@ -151,6 +155,10 @@ final class SetupProfileViewModel: ObservableObject {
             return persist(nextStep: .focusWindow)
 
         case .orbPersona:
+            return persist(nextStep: .notificationPermission)
+
+        case .notificationPermission:
+            await requestNotificationPermission()
             return completeProfile(personaSkipped: false)
 
         default:
@@ -163,7 +171,13 @@ final class SetupProfileViewModel: ObservableObject {
         switch currentStep {
         case .screenTimePermission:
             permissionStatus = screenTimeService.authorizationStatus
-            return persist(nextStep: .orbPersona)
+            return persist(nextStep: .timeLostCalculation)
+
+        case .timeSavedEffect:
+            let nextStep: SetupProfileStep = permissionStatus.isApproved
+                ? .distractingApps
+                : .orbPersona
+            return persist(nextStep: nextStep)
 
         case .distractingApps:
             activitySelection = FamilyActivitySelection()
@@ -176,7 +190,10 @@ final class SetupProfileViewModel: ObservableObject {
             return persist(nextStep: .orbPersona)
 
         case .orbPersona:
-            return completeProfile(personaSkipped: true)
+            return persist(nextStep: .notificationPermission)
+
+        case .notificationPermission:
+            return completeProfile(personaSkipped: false)
 
         default:
             guard let nextStep = currentStep.next else { return false }
@@ -189,12 +206,25 @@ final class SetupProfileViewModel: ObservableObject {
 
         let previousStep: SetupProfileStep
         if currentStep == .orbPersona, !permissionStatus.isApproved {
-            previousStep = .screenTimePermission
+            previousStep = .timeSavedEffect
+        } else if currentStep == .distractingApps, !permissionStatus.isApproved {
+            previousStep = .timeSavedEffect
+        } else if currentStep == .notificationPermission {
+            previousStep = .orbPersona
         } else {
             previousStep = SetupProfileStep(rawValue: currentStep.rawValue - 1) ?? .gender
         }
 
         return persist(nextStep: previousStep)
+    }
+
+    private func requestNotificationPermission() async {
+        do {
+            let center = UNUserNotificationCenter.current()
+            try await center.requestAuthorization(options: [.alert, .sound, .badge])
+        } catch {
+            print("Notification authorization error: \(error)")
+        }
     }
 
     func toggleInterest(_ interest: ProfileInterest) {
@@ -238,7 +268,7 @@ final class SetupProfileViewModel: ObservableObject {
 
     private func completeProfile(personaSkipped: Bool) -> Bool {
         writeCurrentState(personaSkipped: personaSkipped)
-        model.currentStepRawValue = SetupProfileStep.orbPersona.rawValue
+        model.currentStepRawValue = SetupProfileStep.notificationPermission.rawValue
         model.isComplete = true
         model.isScreenTimeConfigured = false
         model.updatedAt = .now

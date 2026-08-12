@@ -117,17 +117,17 @@ struct FuturePageView: View {
         
         switch index {
         case 0:
-            title = "2,050 H - 85 D"
+            title = "2,050 Hours - 85 Days"
             iconName = "brain.head.profile"
             subtitle = "FOCUS"
             description = "Loss of Concentration & Learning Ability"
         case 2:
-            title = "1,520 H - 63 D"
+            title = "1,520 Hours - 63 Days"
             iconName = "person.2.fill"
             subtitle = "SOCIAL"
             description = "Missed Real-life Interactions"
         default: // Index 1
-            title = "3,008 H - 125 D"
+            title = "3,008 Hours - 125 Days"
             iconName = "moon.fill"
             subtitle = "SLEEP"
             description = "Shorter Duration & Poorer Quality"

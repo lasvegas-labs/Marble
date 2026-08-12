@@ -7,9 +7,12 @@ enum SetupProfileStep: Int, CaseIterable, Codable {
     case background
     case interests
     case screenTimePermission
+    case timeLostCalculation
+    case timeSavedEffect
     case distractingApps
     case focusWindow
     case orbPersona
+    case notificationPermission
 
     var next: SetupProfileStep? {
         SetupProfileStep(rawValue: rawValue + 1)

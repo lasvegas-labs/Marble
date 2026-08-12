@@ -112,12 +112,18 @@ struct SetupProfileView: View {
             InterestsStepView(viewModel: viewModel)
         case .screenTimePermission:
             ScreenTimePermissionStepView(viewModel: viewModel)
+        case .timeLostCalculation:
+            TimeLostCalculationStepView(viewModel: viewModel)
+        case .timeSavedEffect:
+            TimeSavedEffectStepView(viewModel: viewModel)
         case .distractingApps:
             DistractingAppsStepView(viewModel: viewModel)
         case .focusWindow:
             FocusWindowStepView(viewModel: viewModel)
         case .orbPersona:
             OrbPersonaStepView(viewModel: viewModel)
+        case .notificationPermission:
+            NotificationPermissionStepView(viewModel: viewModel)
         }
     }
 
@@ -154,7 +160,6 @@ struct SetupProfileView: View {
     private var continueButtonTitle: String {
         switch viewModel.currentStep {
         case .screenTimePermission: "Allow & Continue"
-        case .orbPersona: "Finish"
         default: "Continue"
         }
     }
@@ -168,7 +173,7 @@ struct SetupProfileView: View {
     }
 
     private func continueAction() {
-        let isFinalStep = viewModel.currentStep == .orbPersona
+        let isFinalStep = viewModel.currentStep == .notificationPermission
         Task {
             if await viewModel.continueCurrentStep(), isFinalStep {
                 onComplete()
@@ -177,7 +182,7 @@ struct SetupProfileView: View {
     }
 
     private func skipAction() {
-        let isFinalStep = viewModel.currentStep == .orbPersona
+        let isFinalStep = viewModel.currentStep == .notificationPermission
         if viewModel.skipCurrentStep(), isFinalStep {
             onComplete()
         }
