@@ -2,9 +2,12 @@ import Foundation
 import Intents
 import ManagedSettings
 import UserNotifications
+import DeviceActivity
+import FamilyControls
 
 public enum MarbleShieldState: String, Codable {
     case friction
+    case fifteenMinuteThreshold
     case waitingForNotification
     case focusActive
 }
@@ -58,6 +61,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         case .secondaryButtonPressed:
             liftShield(for: application)
             ShieldStateManager.shared.reset()
+            resetMonitoring()
             completionHandler(.none)
             
         default:
@@ -78,6 +82,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         case .secondaryButtonPressed:
             liftShield(for: category)
             ShieldStateManager.shared.reset()
+            resetMonitoring()
             completionHandler(.none)
             
         default:
@@ -98,6 +103,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         case .secondaryButtonPressed:
             liftShield(for: webDomain)
             ShieldStateManager.shared.reset()
+            resetMonitoring()
             completionHandler(.none)
             
         default:
@@ -111,21 +117,18 @@ class ShieldActionExtension: ShieldActionDelegate {
         let currentState = ShieldStateManager.shared.currentState
         
         switch currentState {
-        case .friction:
-            // User tapped "Show The Recommendation"
-            // Schedule the notification and transition to waitingForNotification without closing the shield
+        case .friction, .fifteenMinuteThreshold:
+            // User tapped "Show The Recommendation" from initial friction or 15-minute threshold
             sendRecommendationNotification()
             ShieldStateManager.shared.currentState = .waitingForNotification
             completionHandler(.defer)
             
         case .waitingForNotification:
             // User tapped "Didn't See The Notification"
-            // Check Focus status using public Apple API
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
                 ShieldStateManager.shared.currentState = .focusActive
             } else {
-                // Focus is OFF: Resend notification and keep waiting state
                 sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
             }
@@ -133,13 +136,10 @@ class ShieldActionExtension: ShieldActionDelegate {
             
         case .focusActive:
             // User tapped "Try Again"
-            // Recheck Focus status
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
-                // Focus still active: maintain focus explanation
                 ShieldStateManager.shared.currentState = .focusActive
             } else {
-                // Focus now OFF: resend notification and return to waiting state
                 sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
             }
@@ -153,8 +153,16 @@ class ShieldActionExtension: ShieldActionDelegate {
         let store = ManagedSettingsStore()
         if var applications = store.shield.applications {
             applications.remove(application)
-            store.shield.applications = applications
+            store.shield.applications = applications.isEmpty ? nil : applications
         }
+        if case .specific(let categories, var exclusions) = store.shield.applicationCategories {
+            exclusions.insert(application)
+            store.shield.applicationCategories = .specific(categories, except: exclusions)
+        }
+    }
+    
+    nonisolated private func liftShield(for application: ApplicationToken, in category: ActivityCategoryToken) {
+        liftShield(for: application)
     }
     
     nonisolated private func liftShield(for category: ActivityCategoryToken) {
@@ -169,8 +177,16 @@ class ShieldActionExtension: ShieldActionDelegate {
         let store = ManagedSettingsStore()
         if var webDomains = store.shield.webDomains {
             webDomains.remove(webDomain)
-            store.shield.webDomains = webDomains
+            store.shield.webDomains = webDomains.isEmpty ? nil : webDomains
         }
+        if case .specific(let categories, var exclusions) = store.shield.webDomainCategories {
+            exclusions.insert(webDomain)
+            store.shield.webDomainCategories = .specific(categories, except: exclusions)
+        }
+    }
+    
+    nonisolated private func liftShield(for webDomain: WebDomainToken, in category: ActivityCategoryToken) {
+        liftShield(for: webDomain)
     }
     
     nonisolated private func sendRecommendationNotification() {
@@ -191,6 +207,53 @@ class ShieldActionExtension: ShieldActionDelegate {
             if let error = error {
                 print("Error scheduling notification: \(error)")
             }
+        }
+    }
+    
+    nonisolated private func resetMonitoring() {
+        let center = DeviceActivityCenter()
+        let activityName = DeviceActivityName("marble.usage.monitoring")
+        center.stopMonitoring([activityName])
+        
+        let appGroupID = "group.com.lasvegas.Marblefahmi1"
+        let savedSelectionKey = "saved_activity_selection"
+        let sharedDefaults = UserDefaults(suiteName: appGroupID)
+        
+        guard let data = sharedDefaults?.data(forKey: savedSelectionKey),
+              let selection = try? PropertyListDecoder().decode(FamilyActivitySelection.self, from: data) else {
+            return
+        }
+        
+        let hasApps = !selection.applicationTokens.isEmpty
+        let hasCategories = !selection.categoryTokens.isEmpty
+        let hasWebDomains = !selection.webDomainTokens.isEmpty
+        
+        guard hasApps || hasCategories || hasWebDomains else { return }
+        
+        let schedule = DeviceActivitySchedule(
+            intervalStart: DateComponents(hour: 0, minute: 0),
+            intervalEnd: DateComponents(hour: 23, minute: 59, second: 59),
+            repeats: true
+        )
+        
+        let thresholdMinutes = sharedDefaults?.integer(forKey: "usage_threshold_minutes") ?? 15
+        let durationMinutes = thresholdMinutes > 0 ? thresholdMinutes : 15
+        
+        let event = DeviceActivityEvent(
+            applications: selection.applicationTokens,
+            categories: selection.categoryTokens,
+            webDomains: selection.webDomainTokens,
+            threshold: DateComponents(minute: durationMinutes)
+        )
+        
+        do {
+            try center.startMonitoring(
+                activityName,
+                during: schedule,
+                events: [DeviceActivityEvent.Name("marble.usage.threshold.15mins"): event]
+            )
+        } catch {
+            print("ShieldActionExtension: Failed to restart monitoring: \(error)")
         }
     }
 }
