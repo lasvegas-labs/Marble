@@ -47,7 +47,7 @@ final class AppRouter: ObservableObject {
 
     func navigateToRecommendation() {
         // Reset shield state to friction for future shield triggers
-        UserDefaults(suiteName: "group.com.lasvegas.Marblefahmi1")?.set("friction", forKey: "marble_shield_state")
+        UserDefaults(suiteName: "group.otniel")?.set("friction", forKey: "marble_shield_state")
 
         // Dismiss any presented sheet first
         presentedSheet = nil
