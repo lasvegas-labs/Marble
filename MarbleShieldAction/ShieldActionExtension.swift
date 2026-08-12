@@ -15,7 +15,7 @@ public enum MarbleShieldState: String, Codable {
 public final class ShieldStateManager {
     public static let shared = ShieldStateManager()
     
-    private let appGroupID = "group.com.lasvegas.Marblefahmi1"
+    private let appGroupID = "group.otniel"
     private let stateKey = "marble_shield_state"
     
     private var userDefaults: UserDefaults? {
@@ -61,6 +61,7 @@ class ShieldActionExtension: ShieldActionDelegate {
 
         switch action {
         case .primaryButtonPressed:
+            saveTriggeredApp("App")
             handlePrimaryAction(completionHandler: completionHandler)
             
         case .secondaryButtonPressed:
@@ -129,7 +130,7 @@ class ShieldActionExtension: ShieldActionDelegate {
     // MARK: - Action Helpers
 
     nonisolated private var isScheduledFocusWindowActive: Bool {
-        UserDefaults(suiteName: "group.com.lasvegas.Marblefahmi1")?
+        UserDefaults(suiteName: "group.otniel")?
             .bool(forKey: "screenTime.focusWindowActive") ?? false
     }
     
@@ -169,6 +170,11 @@ class ShieldActionExtension: ShieldActionDelegate {
     
     // MARK: - Logic Helpers
     
+    nonisolated private func saveTriggeredApp(_ appName: String) {
+        UserDefaults(suiteName: "group.otniel")?
+            .set(appName, forKey: "marble_last_triggered_app")
+    }
+
     nonisolated private func liftShield(for application: ApplicationToken) {
         let store = ManagedSettingsStore()
         if var applications = store.shield.applications {
@@ -235,7 +241,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         let activityName = DeviceActivityName("marble.usage.monitoring")
         center.stopMonitoring([activityName])
         
-        let appGroupID = "group.com.lasvegas.Marblefahmi1"
+        let appGroupID = "group.otniel"
         let savedSelectionKey = "saved_activity_selection"
         let sharedDefaults = UserDefaults(suiteName: appGroupID)
         
