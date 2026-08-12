@@ -125,3 +125,7 @@ xcshareddata/
 
 # Claude
 .claude/
+
+# Local Dev Configuration Backup
+.agents/dev_configs/
+.agents/apply_my_config.sh

@@ -96,6 +96,10 @@ final class SetupProfileViewModel: ObservableObject {
         focusEndMinutes < focusStartMinutes
     }
 
+    func resetToFirstStep() {
+        currentStep = .gender
+    }
+
     var payload: SetupProfilePayload {
         let focusWindow: FocusWindowPayload?
         if

@@ -10,6 +10,7 @@ import FamilyControls
 
 struct HomeView: View {
     @EnvironmentObject private var router: AppRouter
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: HomeViewModel
     @AppStorage("hasCompletedPersonalization_v3") private var hasCompletedPersonalization = false
 
@@ -42,7 +43,7 @@ struct HomeView: View {
                 .tag(1)
 
             // Tab 2: Settings Content
-            SettingsRouteBuilder.build(.main)
+            SettingsRouteBuilder.build(.main, modelContext: modelContext)
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Settings")

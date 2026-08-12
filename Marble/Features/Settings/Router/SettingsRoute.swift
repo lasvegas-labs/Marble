@@ -9,4 +9,5 @@ import Foundation
 
 enum SettingsRoute: Hashable {
     case main
+    case editProfile
 }
