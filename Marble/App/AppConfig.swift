@@ -12,7 +12,7 @@ enum AppConfig {
         if let url = Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String, !url.isEmpty {
             return url
         }
-        return "http://127.0.0.1:9090"
+        return "http://192.168.0.113:9090"
     }()
 
     static let recommendationEndpoint = "\(baseURL)/friction"
