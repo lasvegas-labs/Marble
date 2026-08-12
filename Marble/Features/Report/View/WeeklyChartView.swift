@@ -14,25 +14,27 @@ struct WeeklyChartView: View {
         VStack(alignment: .leading, spacing: 16) {
             Chart {
                 ForEach(dailyData) { dataPoint in
-                    // Background Bar (Total Height = Last Week + This Week) -> Gray
+                    // Last Week Bar -> Gray
                     BarMark(
                         x: .value("Day", dataPoint.date, unit: .day),
                         yStart: .value("Min", 0),
-                        yEnd: .value("Max", dataPoint.hours + dataPoint.lastWeekHours),
-                        width: .fixed(24)
+                        yEnd: .value("Max", dataPoint.lastWeekHours),
+                        width: .fixed(20)
                     )
                     .foregroundStyle(Color.secondary.opacity(0.3))
                     .cornerRadius(8)
+                    .offset(x: -6)
 
-                    // Foreground Bar (This Week) -> Green
+                    // This Week Bar -> Green
                     BarMark(
                         x: .value("Day", dataPoint.date, unit: .day),
                         yStart: .value("Min", 0),
                         yEnd: .value("Max", dataPoint.hours),
-                        width: .fixed(24)
+                        width: .fixed(20)
                     )
                     .foregroundStyle(Color(red: 0.18, green: 0.83, blue: 0.75))
                     .cornerRadius(8)
+                    .offset(x: 6)
                     .annotation(position: .top) {
                         if dataPoint.isHighlighted {
                             Text("\(Int(dataPoint.hours))h")
@@ -46,19 +48,19 @@ struct WeeklyChartView: View {
                 AxisMarks(values: .stride(by: .day)) { value in
                     if let date = value.as(Date.self) {
                         AxisValueLabel {
-                            Text(date, format: .dateTime.day().month())
-                                .font(.system(size: 10))
-                                .foregroundColor(.secondary)
+                            VStack(spacing: 4) {
+                                Text(date, format: .dateTime.weekday(.narrow))
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.secondary)
+                                Text(date, format: .dateTime.day())
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.primary)
+                            }
                         }
                     }
                 }
             }
-            .chartYAxis {
-                AxisMarks(position: .leading) {
-                    AxisGridLine()
-                    AxisValueLabel()
-                }
-            }
+            .chartYAxis(.hidden)
             .chartLegend(.hidden)
             .frame(height: 220)
 
@@ -84,13 +86,23 @@ struct WeeklyChartView: View {
                 }
 
                 HStack {
-                    Text("Most Distracting: Tuesday")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Most Distracting")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("Tuesday")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                    }
                     Spacer()
-                    Text("Most Productive: Wednesday")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Most Productive")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("Wednesday")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                    }
                 }
             }
             .padding(.top, 16)

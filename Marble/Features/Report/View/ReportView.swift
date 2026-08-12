@@ -56,14 +56,26 @@ struct ReportView: View {
                         .fontWeight(.bold)
                     
                     HStack {
+                        Text(viewModel.dateRangeText)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            
                         Spacer()
                         
-                        DatePicker(
-                            "Select Week Start",
-                            selection: $viewModel.selectedStartDate,
-                            displayedComponents: .date
-                        )
-                        .labelsHidden()
+                        ZStack {
+                            Image(systemName: "calendar.badge.plus")
+                                .font(.title3)
+                                .foregroundColor(Color(red: 0.18, green: 0.83, blue: 0.75))
+                            
+                            DatePicker(
+                                "Select Week Start",
+                                selection: $viewModel.selectedStartDate,
+                                displayedComponents: .date
+                            )
+                            .labelsHidden()
+                            .blendMode(.destinationOver)
+                            .opacity(0.011)
+                        }
                     }
                     
                     WeeklyChartView(dailyData: viewModel.dailyData)

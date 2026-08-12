@@ -32,6 +32,13 @@ final class ReportViewModel: ObservableObject {
         let minutes = (Int(weeklyTotalSeconds) % 3600) / 60
         return "\(hours)h \(minutes)m"
     }
+    
+    var dateRangeText: String {
+        let end = Calendar.current.date(byAdding: .day, value: 6, to: selectedStartDate) ?? selectedStartDate
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM yyyy"
+        return "\(formatter.string(from: selectedStartDate)) - \(formatter.string(from: end))"
+    }
 
     init() {
         weeklyTotalSeconds = 19 * 3600 + 18 * 60 // 19h 18m
