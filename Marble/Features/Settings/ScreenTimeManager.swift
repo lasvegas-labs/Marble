@@ -44,7 +44,9 @@ public class ScreenTimeManager: ObservableObject {
     }
     
     public func checkAuthorizationStatus() {
-        hasAuthorization = AuthorizationCenter.shared.authorizationStatus == .approved
+        hasAuthorization = Self.isApproved(
+            AuthorizationCenter.shared.authorizationStatus
+        )
     }
     
     public func requestAuthorization() {
@@ -57,7 +59,9 @@ public class ScreenTimeManager: ObservableObject {
         do {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
-            hasAuthorization = (AuthorizationCenter.shared.authorizationStatus == .approved)
+            hasAuthorization = Self.isApproved(
+                AuthorizationCenter.shared.authorizationStatus
+            )
             if hasAuthorization {
                 updateDeviceActivityMonitoring()
             }
@@ -134,5 +138,17 @@ public class ScreenTimeManager: ObservableObject {
         sharedDefaults?.synchronize()
         applyShield()
         print("ScreenTimeManager: Simulated 15-minute threshold reached! Shield re-applied.")
+    }
+
+    private static func isApproved(_ status: AuthorizationStatus) -> Bool {
+        if status == .approved { return true }
+
+        #if compiler(>=6.3)
+        if #available(iOS 26.4, *), status == .approvedWithDataAccess {
+            return true
+        }
+        #endif
+
+        return false
     }
 }
