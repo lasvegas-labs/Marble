@@ -165,7 +165,7 @@ struct OnboardingView: View {
                     .frame(maxWidth: .infinity)
             }
                 .controlSize(.large)
-                .buttonStyle(.bordered)
+                .buttonStyle(.bordered) 
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
         }

@@ -54,6 +54,11 @@ class ShieldActionExtension: ShieldActionDelegate {
         for application: ApplicationToken,
         completionHandler: @escaping (ShieldActionResponse) -> Void
     ) {
+        guard !isScheduledFocusWindowActive else {
+            completionHandler(.defer)
+            return
+        }
+
         switch action {
         case .primaryButtonPressed:
             handlePrimaryAction(completionHandler: completionHandler)
@@ -75,6 +80,11 @@ class ShieldActionExtension: ShieldActionDelegate {
         for category: ActivityCategoryToken,
         completionHandler: @escaping (ShieldActionResponse) -> Void
     ) {
+        guard !isScheduledFocusWindowActive else {
+            completionHandler(.defer)
+            return
+        }
+
         switch action {
         case .primaryButtonPressed:
             handlePrimaryAction(completionHandler: completionHandler)
@@ -96,6 +106,11 @@ class ShieldActionExtension: ShieldActionDelegate {
         for webDomain: WebDomainToken,
         completionHandler: @escaping (ShieldActionResponse) -> Void
     ) {
+        guard !isScheduledFocusWindowActive else {
+            completionHandler(.defer)
+            return
+        }
+
         switch action {
         case .primaryButtonPressed:
             handlePrimaryAction(completionHandler: completionHandler)
@@ -112,6 +127,11 @@ class ShieldActionExtension: ShieldActionDelegate {
     }
     
     // MARK: - Action Helpers
+
+    nonisolated private var isScheduledFocusWindowActive: Bool {
+        UserDefaults(suiteName: "group.com.lasvegas.Marblefahmi1")?
+            .bool(forKey: "screenTime.focusWindowActive") ?? false
+    }
     
     nonisolated private func handlePrimaryAction(completionHandler: @escaping (ShieldActionResponse) -> Void) {
         let currentState = ShieldStateManager.shared.currentState

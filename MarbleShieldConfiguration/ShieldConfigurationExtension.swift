@@ -15,6 +15,7 @@ public final class ShieldStateManager {
     
     private let appGroupID = "group.com.lasvegas.Marblefahmi1"
     private let stateKey = "marble_shield_state"
+    private let focusWindowActiveKey = "screenTime.focusWindowActive"
     
     private var userDefaults: UserDefaults? {
         UserDefaults(suiteName: appGroupID)
@@ -32,6 +33,10 @@ public final class ShieldStateManager {
             userDefaults?.set(newValue.rawValue, forKey: stateKey)
             userDefaults?.synchronize()
         }
+    }
+
+    public var isScheduledFocusWindowActive: Bool {
+        userDefaults?.bool(forKey: focusWindowActiveKey) ?? false
     }
     
     public func reset() {
@@ -58,6 +63,26 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     
     private func createShieldConfiguration() -> ShieldConfiguration {
         let shieldIcon = loadAndResizeIcon(named: "ShieldIcon", size: CGSize(width: 228, height: 228))
+
+        if ShieldStateManager.shared.isScheduledFocusWindowActive {
+            return ShieldConfiguration(
+                backgroundBlurStyle: .systemMaterialLight,
+                backgroundColor: .white,
+                icon: shieldIcon,
+                title: ShieldConfiguration.Label(
+                    text: "Focus Window Active",
+                    color: .black
+                ),
+                subtitle: ShieldConfiguration.Label(
+                    text: "This distraction is blocked until your focus window ends.",
+                    color: .gray
+                ),
+                primaryButtonLabel: nil,
+                primaryButtonBackgroundColor: nil,
+                secondaryButtonLabel: nil
+            )
+        }
+
         let state = ShieldStateManager.shared.currentState
         
         switch state {

@@ -19,7 +19,9 @@ public class ScreenTimeManager: ObservableObject {
     private init() {}
     
     public func checkAuthorizationStatus() {
-        hasAuthorization = AuthorizationCenter.shared.authorizationStatus == .approved
+        hasAuthorization = Self.isApproved(
+            AuthorizationCenter.shared.authorizationStatus
+        )
         if hasAuthorization {
             applyShield()
         }
@@ -35,7 +37,9 @@ public class ScreenTimeManager: ObservableObject {
         do {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
-            hasAuthorization = (AuthorizationCenter.shared.authorizationStatus == .approved)
+            hasAuthorization = Self.isApproved(
+                AuthorizationCenter.shared.authorizationStatus
+            )
         } catch {
             print("Failed to authorize Family Controls: \(error)")
             hasAuthorization = false
@@ -55,5 +59,17 @@ public class ScreenTimeManager: ObservableObject {
         store.shield.applications = nil
         store.shield.applicationCategories = nil
         store.shield.webDomainCategories = nil
+    }
+
+    private static func isApproved(_ status: AuthorizationStatus) -> Bool {
+        if status == .approved { return true }
+
+        #if compiler(>=6.3)
+        if #available(iOS 26.4, *), status == .approvedWithDataAccess {
+            return true
+        }
+        #endif
+
+        return false
     }
 }

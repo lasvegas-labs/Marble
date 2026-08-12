@@ -4,6 +4,7 @@
 //  Created by Muhammad Fahmi on 28/07/26.
 //
 
+import SwiftData
 import SwiftUI
 import UserNotifications
 
@@ -86,6 +87,7 @@ struct MarbleApp: App {
                 }
             }
         }
+        .modelContainer(for: SetupProfileModel.self)
     }
 
     private func beginHandoff() {
