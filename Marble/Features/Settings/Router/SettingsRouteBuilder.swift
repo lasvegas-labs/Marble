@@ -16,6 +16,8 @@ struct SettingsRouteBuilder {
             SettingsView(viewModel: SettingsViewModel())
         case .editProfile:
             EditProfileContainerView(modelContext: modelContext)
+        case .chooseCompanion:
+            ChooseCompanionContainerView(modelContext: modelContext)
         }
     }
 }
