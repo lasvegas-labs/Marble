@@ -100,6 +100,10 @@ final class SetupProfileViewModel: ObservableObject {
         currentStep = .gender
     }
 
+    func resetToCompanionStep() {
+        currentStep = .orbPersona
+    }
+
     var payload: SetupProfilePayload {
         let focusWindow: FocusWindowPayload?
         if

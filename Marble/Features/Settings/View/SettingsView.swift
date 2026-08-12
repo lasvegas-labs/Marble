@@ -40,7 +40,9 @@ struct SettingsView: View {
                         }
                     }
                     Divider().padding(.leading, 64)
-                    SettingsRowView(icon: "siri", label: "Choose your companion")
+                    SettingsRowView(icon: "siri", label: "Choose your companion") {
+                        router.push(.settings(.chooseCompanion))
+                    }
                     Divider().padding(.leading, 64)
                     SettingsRowView(icon: "figure.mind.and.body.circle", label: "Edit your focus window")
                     Divider().padding(.leading, 64)
