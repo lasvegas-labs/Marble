@@ -5,14 +5,17 @@
 //  Created by Amalia Sandi Alzahrah on 11/08/26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SettingsRouteBuilder {
     @ViewBuilder
-    static func build(_ route: SettingsRoute) -> some View {
+    static func build(_ route: SettingsRoute, modelContext: ModelContext) -> some View {
         switch route {
         case .main:
             SettingsView(viewModel: SettingsViewModel())
+        case .editProfile:
+            EditProfileContainerView(modelContext: modelContext)
         }
     }
 }

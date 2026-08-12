@@ -28,7 +28,9 @@ struct SettingsView: View {
                     .padding(.bottom, 24)
 
                 VStack(spacing: 0) {
-                    SettingsRowView(icon: "person", label: "Edit your profile")
+                    SettingsRowView(icon: "person", label: "Edit your profile") {
+                        router.push(.settings(.editProfile))
+                    }
                     Divider().padding(.leading, 64)
                     SettingsRowView(icon: "square.3.layers.3d", label: "Edit your choosen apps") {
                         if screenTime.hasAuthorization {
@@ -42,31 +44,6 @@ struct SettingsView: View {
                     Divider().padding(.leading, 64)
                     SettingsRowView(icon: "figure.mind.and.body.circle", label: "Edit your focus window")
                     Divider().padding(.leading, 64)
-                    SettingsToggleRowView(
-                        icon: "app.badge.clock",
-                        label: "Screen Time Access",
-                        isOn: Binding(
-                            get: { screenTime.hasAuthorization },
-                            set: { newValue in
-                                if newValue {
-                                    screenTime.requestAuthorization()
-                                }
-                            }
-                        )
-                    )
-                    Divider().padding(.leading, 64)
-                    SettingsToggleRowView(
-                        icon: "bell",
-                        label: "Notification Access",
-                        isOn: $viewModel.isNotificationAccessEnabled
-                    )
-                    Divider().padding(.leading, 64)
-                    
-                    //for debug i know this not will run on production
-                    // SettingsRowView(icon: "bolt.badge.clock", label: "⚡️ Trigger 15min Shield (Test)") {
-                    //     screenTime.simulateThresholdReached()
-                    // }
-                    // Divider().padding(.leading, 64)
                 }
             }
         }
@@ -114,36 +91,6 @@ struct SettingsRowView: View {
             .background(SettingsTheme.cardBackground)
         }
         .buttonStyle(.plain)
-    }
-}
-
-struct SettingsToggleRowView: View {
-    let icon: String
-    let label: String
-    @Binding var isOn: Bool
-
-    var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: icon)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 34, height: 28)
-                .foregroundStyle(.primary)
-                .frame(width: 44)
-
-            Text(label)
-                .font(.system(size: 17))
-                .foregroundStyle(.primary)
-
-            Spacer()
-
-            Toggle("", isOn: $isOn)
-                .labelsHidden()
-                .tint(SettingsTheme.teal)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 14)
-        .background(SettingsTheme.cardBackground)
     }
 }
 

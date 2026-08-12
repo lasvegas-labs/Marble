@@ -15,7 +15,7 @@ struct AppRouteBuilder {
         case .report(let reportRoute):
             ReportRouteBuilder.build(reportRoute)
         case .settings(let settingsRoute):
-            SettingsRouteBuilder.build(settingsRoute)
+            SettingsRouteBuilderWrapper(settingsRoute: settingsRoute)
         case .future(let futureRoute):
             FutureRouteBuilder.build(futureRoute)
         case .friction(let frictionRoute):
@@ -23,5 +23,14 @@ struct AppRouteBuilder {
         case .recommendation:
             RecommendationView()
         }
+    }
+}
+
+private struct SettingsRouteBuilderWrapper: View {
+    let settingsRoute: SettingsRoute
+    @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        SettingsRouteBuilder.build(settingsRoute, modelContext: modelContext)
     }
 }
