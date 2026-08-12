@@ -61,6 +61,12 @@ struct SettingsView: View {
                         isOn: $viewModel.isNotificationAccessEnabled
                     )
                     Divider().padding(.leading, 64)
+                    
+                    //for debug i know this not will run on production
+                    // SettingsRowView(icon: "bolt.badge.clock", label: "⚡️ Trigger 15min Shield (Test)") {
+                    //     screenTime.simulateThresholdReached()
+                    // }
+                    // Divider().padding(.leading, 64)
                 }
             }
         }
@@ -69,6 +75,9 @@ struct SettingsView: View {
         .familyActivityPicker(isPresented: $isPickerPresented, selection: $screenTime.selectionToDiscourage)
         .onAppear {
             screenTime.checkAuthorizationStatus()
+        }
+        .onChange(of: screenTime.selectionToDiscourage) { _ in
+            screenTime.applyShield()
         }
     }
 }

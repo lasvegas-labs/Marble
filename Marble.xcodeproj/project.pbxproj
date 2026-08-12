@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17F361AA302C171B0020876C /* MarbleDeviceActivityReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2AFF430F937480E9ECB8855D /* MarbleShieldConfiguration.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */; };
 		4EF06D4B3C4D5CA522A1C182 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9187DEBB9FA2AD21728F736 /* ShieldConfigurationExtension.swift */; };
 		9E8243745208FF5D90044DEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30943180B5D674F063CC867 /* Foundation.framework */; };
@@ -17,7 +18,28 @@
 		D7FFF1A496B41E8C60B37048 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C3C61F3227503BCCE6C45 /* ShieldActionExtension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		17F361A8302C171B0020876C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F2B62323029825D00345B7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17F3619D302C171B0020876C;
+			remoteInfo = MarbleDeviceActivityReport;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		17F361AF302C171B0020876C /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				17F361AA302C171B0020876C /* MarbleDeviceActivityReport.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6E5EDD5252E9A053F9BA38E5 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -34,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = MarbleDeviceActivityReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarbleShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		61589542DE69628CE4A71B25 /* Marble.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Marble.entitlements; sourceTree = "<group>"; };
 		7E0C3C61F3227503BCCE6C45 /* ShieldActionExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShieldActionExtension.swift; sourceTree = "<group>"; };
@@ -43,7 +66,25 @@
 		CC1234560001234400ABCDEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		17F361AB302C171B0020876C /* Exceptions for "MarbleDeviceActivityReport" folder in "MarbleDeviceActivityReport" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		17F3619F302C171B0020876C /* MarbleDeviceActivityReport */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				17F361AB302C171B0020876C /* Exceptions for "MarbleDeviceActivityReport" folder in "MarbleDeviceActivityReport" target */,
+			);
+			path = MarbleDeviceActivityReport;
+			sourceTree = "<group>";
+		};
 		9F2B623C3029825D00345B7B /* Marble */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Marble;
@@ -52,6 +93,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17F3619B302C171B0020876C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F2B62373029825D00345B7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -100,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				9F2B623C3029825D00345B7B /* Marble */,
+				17F3619F302C171B0020876C /* MarbleDeviceActivityReport */,
 				9F2B623B3029825D00345B7B /* Products */,
 				61589542DE69628CE4A71B25 /* Marble.entitlements */,
 				95EC699291C5D91D5E70E5FD /* Frameworks */,
@@ -114,6 +163,7 @@
 				9F2B623A3029825D00345B7B /* Marble.app */,
 				009993E8D25E365CBE5EC343 /* MarbleShieldConfiguration.appex */,
 				3D866F8FD25396D23FA2AC15 /* MarbleShieldAction.appex */,
+				17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,6 +187,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17F3619D302C171B0020876C /* MarbleDeviceActivityReport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F361AC302C171B0020876C /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityReport" */;
+			buildPhases = (
+				17F3619A302C171B0020876C /* Sources */,
+				17F3619B302C171B0020876C /* Frameworks */,
+				17F3619C302C171B0020876C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17F3619F302C171B0020876C /* MarbleDeviceActivityReport */,
+			);
+			name = MarbleDeviceActivityReport;
+			productName = MarbleDeviceActivityReport;
+			productReference = 17F3619E302C171B0020876C /* MarbleDeviceActivityReport.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		9F2B62393029825D00345B7B /* Marble */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F2B62453029825E00345B7B /* Build configuration list for PBXNativeTarget "Marble" */;
@@ -145,10 +215,12 @@
 				9F2B62373029825D00345B7B /* Frameworks */,
 				9F2B62383029825D00345B7B /* Resources */,
 				6E5EDD5252E9A053F9BA38E5 /* Embed App Extensions */,
+				17F361AF302C171B0020876C /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				17F361A9302C171B0020876C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9F2B623C3029825D00345B7B /* Marble */,
@@ -202,9 +274,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					17F3619D302C171B0020876C = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					9F2B62393029825D00345B7B = {
 						CreatedOnToolsVersion = 26.3;
 						SystemCapabilities = {
@@ -235,11 +310,19 @@
 				9F2B62393029825D00345B7B /* Marble */,
 				F26E92991EEA1CAD9CCF7CA1 /* MarbleShieldConfiguration */,
 				FF7E781787226B5E8E5EE76D /* MarbleShieldAction */,
+				17F3619D302C171B0020876C /* MarbleDeviceActivityReport */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17F3619C302C171B0020876C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49FC7CF34063634EDCEB6AF0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,6 +348,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17F3619A302C171B0020876C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		377CE260842A98CD484158B7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -290,7 +380,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		17F361A9302C171B0020876C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
+			targetProxy = 17F361A8302C171B0020876C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		17F361AD302C171B0020876C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityReport/MarbleDeviceActivityReport.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarbleDeviceActivityReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarbleDeviceActivityReport;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleDeviceActivityReport;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17F361AE302C171B0020876C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MarbleDeviceActivityReport/MarbleDeviceActivityReport.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FYZXU68Q3B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarbleDeviceActivityReport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MarbleDeviceActivityReport;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lasvegas.Marblejordan.MarbleDeviceActivityReport;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		1F29523C57F8AC46E7E100B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -467,8 +625,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,8 +663,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -580,6 +738,15 @@
 			buildConfigurations = (
 				DF5AA6AA847CFDC46CA3A226 /* Release */,
 				B4D28679A0284B56058D173D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17F361AC302C171B0020876C /* Build configuration list for PBXNativeTarget "MarbleDeviceActivityReport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F361AD302C171B0020876C /* Debug */,
+				17F361AE302C171B0020876C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

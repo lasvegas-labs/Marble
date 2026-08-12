@@ -11,11 +11,7 @@ public class ScreenTimeManager: ObservableObject {
     public static let shared = ScreenTimeManager()
     
     @Published public var hasAuthorization = false
-    @Published public var selectionToDiscourage = FamilyActivitySelection() {
-        didSet {
-            applyShield()
-        }
-    }
+    @Published public var selectionToDiscourage = FamilyActivitySelection()
     
     // Use the default store which is automatically shared with the app's extensions
     let store = ManagedSettingsStore()
@@ -24,6 +20,9 @@ public class ScreenTimeManager: ObservableObject {
     
     public func checkAuthorizationStatus() {
         hasAuthorization = AuthorizationCenter.shared.authorizationStatus == .approved
+        if hasAuthorization {
+            applyShield()
+        }
     }
     
     public func requestAuthorization() {
@@ -50,5 +49,11 @@ public class ScreenTimeManager: ObservableObject {
         store.shield.applications = applications.isEmpty ? nil : applications
         store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
         store.shield.webDomainCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
+    }
+    
+    public func clearShield() {
+        store.shield.applications = nil
+        store.shield.applicationCategories = nil
+        store.shield.webDomainCategories = nil
     }
 }
