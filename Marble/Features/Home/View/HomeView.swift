@@ -60,7 +60,7 @@ struct HomeView: View {
             // Header Title
             HStack {
                 Text("Home")
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .font(.system(.largeTitle, design: .rounded).bold())
                 Spacer()
             }
             .padding(.horizontal, 28)
@@ -118,7 +118,7 @@ struct HomeView: View {
                             .foregroundColor(Color(uiColor: .systemGray))
 
                         Text("3h 17m")
-                            .font(.system(size: 34, weight: .bold, design: .rounded))
+                            .font(.system(.largeTitle, design: .rounded).bold())
                             .foregroundColor(.primary)
 
                         Text("See what happen in the future, if you do this constantly.")
@@ -161,7 +161,7 @@ struct HomeView: View {
             // Empty State Text Stack
             VStack(spacing: 8) {
                 Text("No Datas")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .font(.system(.title2, design: .rounded).bold())
                     .foregroundColor(.primary)
 
                 Text("Please complete your personalization details.")
@@ -191,7 +191,7 @@ struct HomeView: View {
                     )
                     .overlay(
                         Capsule()
-                            .stroke(Color.black.opacity(0.04), lineWidth: 1.0)
+                            .stroke(Color.primary.opacity(0.1), lineWidth: 1.0)
                     )
                     .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 6)
             }

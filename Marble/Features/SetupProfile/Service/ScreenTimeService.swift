@@ -4,7 +4,7 @@ import Foundation
 import ManagedSettings
 
 enum ScreenTimeStorage {
-    static let appGroupIdentifier = "group.com.lasvegas.Marblefahmi1"
+    static let appGroupIdentifier = "group.otniel"
     static let selectionKey = "saved_activity_selection"
     static let thresholdMinutesKey = "usage_threshold_minutes"
     static let focusWindowActiveKey = "screenTime.focusWindowActive"
@@ -102,7 +102,8 @@ final class ScreenTimeService {
             return false
         }
 
-        applyDefaultShield(for: selection)
+        // Removed applyDefaultShield(for: selection) here so apps aren't blocked 24/7.
+        // The shield will be applied when the threshold is reached in DeviceActivityMonitor.
 
         let schedule = DeviceActivitySchedule(
             intervalStart: DateComponents(hour: 0, minute: 0),
@@ -128,44 +129,82 @@ final class ScreenTimeService {
 
     func configureFocusMonitoring(
         for selection: FamilyActivitySelection,
-        startMinutes: Int?,
-        endMinutes: Int?,
-        weekdays: Set<FocusWeekday>
+        focusWindows: [FocusWindowModel]
     ) throws -> Bool {
         stopFocusMonitoring()
 
         guard
             authorizationStatus.isApproved,
             Self.hasSelection(selection),
-            let startMinutes,
-            let endMinutes,
-            !weekdays.isEmpty
+            !focusWindows.isEmpty
         else {
             return false
         }
 
-        let schedules = weekdays.compactMap { weekday in
-            Self.focusSchedule(
-                startMinutes: startMinutes,
-                endMinutes: endMinutes,
-                weekday: weekday
-            ).map { (weekday, $0) }
+        var schedulesToStart: [(DeviceActivityName, DeviceActivitySchedule)] = []
+
+        for window in focusWindows {
+            for weekdayRaw in window.weekdays {
+                guard let weekday = FocusWeekday(rawValue: weekdayRaw) else { continue }
+                if let schedule = Self.focusSchedule(
+                    startMinutes: window.startMinutes,
+                    endMinutes: window.endMinutes,
+                    weekday: weekday
+                ) {
+                    schedulesToStart.append((Self.focusActivityName(for: window.id, weekday: weekday), schedule))
+                }
+            }
         }
 
-        guard schedules.count == weekdays.count else { return false }
+        guard !schedulesToStart.isEmpty else { return false }
 
         do {
-            for (weekday, schedule) in schedules {
+            for (activityName, schedule) in schedulesToStart {
                 try activityCenter.startMonitoring(
-                    Self.focusActivityName(for: weekday),
+                    activityName,
                     during: schedule
                 )
             }
+            // MANUALLY APPLY SHIELD IF WE ARE CURRENTLY IN ANY WINDOW
+            if isCurrentlyInFocusWindow(focusWindows) {
+                applyFocusShield(for: selection)
+            } else {
+                clearFocusShield()
+            }
+            
             return true
         } catch {
             stopFocusMonitoring()
             throw error
         }
+    }
+    
+    private func applyFocusShield(for selection: FamilyActivitySelection) {
+        focusStore.shield.applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
+        focusStore.shield.applicationCategories = selection.categoryTokens.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
+        focusStore.shield.webDomainCategories = selection.categoryTokens.isEmpty ? nil : ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
+    }
+    
+    private func isCurrentlyInFocusWindow(_ windows: [FocusWindowModel]) -> Bool {
+        let calendar = Calendar.current
+        let now = Date()
+        let currentMinutes = calendar.component(.hour, from: now) * 60 + calendar.component(.minute, from: now)
+        let currentWeekday = calendar.component(.weekday, from: now) // 1 = Sun, 2 = Mon
+
+        for window in windows {
+            if window.weekdays.contains(currentWeekday) {
+                if window.crossesMidnight {
+                    if currentMinutes >= window.startMinutes || currentMinutes < window.endMinutes {
+                        return true
+                    }
+                } else {
+                    if currentMinutes >= window.startMinutes && currentMinutes < window.endMinutes {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
 
     func stopUsageMonitoring() {
@@ -174,9 +213,8 @@ final class ScreenTimeService {
     }
 
     func stopFocusMonitoring() {
-        activityCenter.stopMonitoring(
-            FocusWeekday.allCases.map(Self.focusActivityName(for:))
-        )
+        let activitiesToStop = activityCenter.activities.filter { $0.rawValue.hasPrefix("marble.focus.") }
+        activityCenter.stopMonitoring(Array(activitiesToStop))
         sharedDefaults?.set(false, forKey: ScreenTimeStorage.focusWindowActiveKey)
         sharedDefaults?.synchronize()
         clearFocusShield()
@@ -219,6 +257,13 @@ final class ScreenTimeService {
         for weekday: FocusWeekday
     ) -> DeviceActivityName {
         DeviceActivityName("marble.focus.\(weekday.rawValue)")
+    }
+
+    private static func focusActivityName(
+        for windowId: UUID,
+        weekday: FocusWeekday
+    ) -> DeviceActivityName {
+        DeviceActivityName("marble.focus.\(windowId.uuidString).\(weekday.rawValue)")
     }
 
     private static func dateComponents(

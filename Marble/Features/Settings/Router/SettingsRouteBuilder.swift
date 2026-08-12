@@ -18,6 +18,8 @@ struct SettingsRouteBuilder {
             EditProfileContainerView(modelContext: modelContext)
         case .chooseCompanion:
             ChooseCompanionContainerView(modelContext: modelContext)
+        case .focusWindows:
+            FocusWindowContainerView(modelContext: modelContext)
         }
     }
 }

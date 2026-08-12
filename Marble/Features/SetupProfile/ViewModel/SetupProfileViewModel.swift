@@ -269,13 +269,16 @@ final class SetupProfileViewModel: ObservableObject {
             let isUsageMonitoringConfigured = try screenTimeService.configureUsageMonitoring(
                 for: activitySelection
             )
+            let initialWindow = FocusWindowModel(
+                name: "Work Time",
+                startMinutes: model.focusStartMinutes ?? 9 * 60,
+                endMinutes: model.focusEndMinutes ?? 17 * 60,
+                weekdays: model.focusWeekdays
+            )
+            
             let isFocusMonitoringConfigured = try screenTimeService.configureFocusMonitoring(
                 for: activitySelection,
-                startMinutes: model.focusStartMinutes,
-                endMinutes: model.focusEndMinutes,
-                weekdays: Set(
-                    model.focusWeekdays.compactMap(FocusWeekday.init(rawValue:))
-                )
+                focusWindows: [initialWindow]
             )
             model.isScreenTimeConfigured = isUsageMonitoringConfigured
                 && isFocusMonitoringConfigured

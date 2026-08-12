@@ -16,15 +16,14 @@ public class ScreenTimeManager: ObservableObject {
     // Use the default store which is automatically shared with the app's extensions
     let store = ManagedSettingsStore()
     
-    private init() {}
+    private init() {
+        self.selectionToDiscourage = ScreenTimeService().loadSelection()
+    }
     
     public func checkAuthorizationStatus() {
         hasAuthorization = Self.isApproved(
             AuthorizationCenter.shared.authorizationStatus
         )
-        if hasAuthorization {
-            applyShield()
-        }
     }
     
     public func requestAuthorization() {
@@ -46,20 +45,7 @@ public class ScreenTimeManager: ObservableObject {
         }
     }
     
-    public func applyShield() {
-        let applications = selectionToDiscourage.applicationTokens
-        let categories = selectionToDiscourage.categoryTokens
-        
-        store.shield.applications = applications.isEmpty ? nil : applications
-        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
-        store.shield.webDomainCategories = ShieldSettings.ActivityCategoryPolicy.specific(categories)
-    }
-    
-    public func clearShield() {
-        store.shield.applications = nil
-        store.shield.applicationCategories = nil
-        store.shield.webDomainCategories = nil
-    }
+
 
     private static func isApproved(_ status: AuthorizationStatus) -> Bool {
         if status == .approved { return true }

@@ -163,12 +163,12 @@ struct ScreenTimePermissionStepView: View {
                         // Inner Mock System Permission Card (Light Glassmorphism with Margin)
                         VStack(spacing: 12) {
                             Text("\"Marble\" Would Like to Access Screen Time")
-                                .font(.system(size: 17, weight: .bold, design: .rounded))
+                                .font(.system(.body, design: .rounded).bold())
                                 .foregroundColor(.primary)
                                 .multilineTextAlignment(.center)
                             
                             Text("Providing \"Marble\" access to Screen Time may allow it to see your activity data, restrict content, and limit the usage of apps and websites.")
-                                .font(.system(size: 13, weight: .regular, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(1.5)
@@ -181,10 +181,10 @@ struct ScreenTimePermissionStepView: View {
                                     }
                                 } label: {
                                     Text("Continue")
-                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .font(.system(.subheadline, design: .rounded).bold())
                                         .foregroundColor(.primary)
                                         .frame(width: 105, height: 38)
-                                        .background(Color.black.opacity(0.06), in: .capsule)
+                                        .background(Color.primary.opacity(0.06), in: .capsule)
                                 }
                                 .buttonStyle(.plain)
 
@@ -194,7 +194,7 @@ struct ScreenTimePermissionStepView: View {
                                     }
                                 } label: {
                                     Text("Don't Allow")
-                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .font(.system(.subheadline, design: .rounded).bold())
                                         .foregroundColor(.white)
                                         .frame(width: 105, height: 38)
                                         .background(Color.blue, in: .capsule)
@@ -212,7 +212,7 @@ struct ScreenTimePermissionStepView: View {
                         )
                         .background(
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white.opacity(0.18))
+                                .fill(Color(uiColor: .systemBackground).opacity(0.5))
                         )
                         .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
                     )
@@ -221,7 +221,7 @@ struct ScreenTimePermissionStepView: View {
                 VStack(spacing: 4) {
                     CurvedArrow()
                     Text("Tap Continue")
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .font(.system(.caption, design: .rounded).bold())
                         .foregroundColor(Color(red: 0.0, green: 0.82, blue: 0.58))
                 }
                 .offset(x: 20, y: 72)
@@ -415,13 +415,13 @@ private struct TimeFieldBox: View {
                     nudge(by: step)
                 } label: {
                     Image(systemName: "chevron.up")
-                        .font(.system(size: 9, weight: .bold))
+                        .font(.caption2.weight(.bold))
                 }
                 Button {
                     nudge(by: -step)
                 } label: {
                     Image(systemName: "chevron.down")
-                        .font(.system(size: 9, weight: .bold))
+                        .font(.caption2.weight(.bold))
                 }
             }
             .buttonStyle(.plain)
@@ -493,7 +493,7 @@ struct OrbPersonaStepView: View {
                 )
                 .background(
                     SpeechBubble(cornerRadius: 20)
-                        .fill(Color.white.opacity(0.25))
+                        .fill(Color(uiColor: .systemBackground).opacity(0.4))
                 )
                 .background(.thinMaterial, in: SpeechBubble(cornerRadius: 20))
                 .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 5)
@@ -558,7 +558,7 @@ struct OrbPersonaStepView: View {
             HStack {
                 ForEach(OrbPersonality.allCases) { personality in
                     Text(personality.title)
-                        .font(.system(size: 11, weight: personality == viewModel.orbPersonality ? .bold : .regular, design: .rounded))
+                        .font(.system(.caption2, design: .rounded).weight(personality == viewModel.orbPersonality ? .bold : .regular))
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                         .foregroundStyle(
@@ -595,11 +595,11 @@ struct OrbPersonaStepView: View {
     private var gradientColors: [Color] {
         switch viewModel.orbPersonality {
         case .gentle:
-            return [Color(red: 0.0, green: 0.82, blue: 0.58).opacity(0.22), Color.white.opacity(0.05)]
+            return [Color(red: 0.0, green: 0.82, blue: 0.58).opacity(0.22), Color(uiColor: .systemBackground).opacity(0.2)]
         case .passive:
-            return [Color(red: 1.0, green: 0.72, blue: 0.3).opacity(0.25), Color.white.opacity(0.05)]
+            return [Color(red: 1.0, green: 0.72, blue: 0.3).opacity(0.25), Color(uiColor: .systemBackground).opacity(0.2)]
         case .aggressive:
-            return [Color(red: 1.0, green: 0.35, blue: 0.45).opacity(0.22), Color.white.opacity(0.05)]
+            return [Color(red: 1.0, green: 0.35, blue: 0.45).opacity(0.22), Color(uiColor: .systemBackground).opacity(0.2)]
         }
     }
 
@@ -651,7 +651,7 @@ private struct SelectionRow: View {
                     .multilineTextAlignment(.leading)
                 Spacer()
                 Image(systemName: isSelected ? "circle.inset.filled" : "circle")
-                    .font(.system(size: 20, weight: .medium))
+                    .font(.title3.weight(.medium))
                     .foregroundStyle(isSelected ? mintGreen : Color.secondary.opacity(0.35))
             }
             .foregroundStyle(.primary)
@@ -723,7 +723,7 @@ private struct InterestCard: View {
         Button(action: action) {
             HStack(spacing: 14) {
                 Image(systemName: interest.systemImage)
-                    .font(.system(size: 20))
+                    .font(.title3)
                     .frame(width: 28)
                     .foregroundStyle(isSelected ? mintGreen : .primary)
 
@@ -733,7 +733,7 @@ private struct InterestCard: View {
                 Spacer()
                 
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 22))
+                    .font(.title3)
                     .foregroundStyle(isSelected ? mintGreen : Color.secondary.opacity(0.35))
             }
             .foregroundStyle(.primary)
@@ -765,7 +765,7 @@ private struct OtherInterestCard: View {
     var body: some View {
         HStack(spacing: 14) {
             Image(systemName: "square.dashed")
-                .font(.system(size: 20))
+                .font(.title3)
                 .frame(width: 28)
                 .foregroundStyle(text.isEmpty ? Color.secondary : mintGreen)
 
@@ -776,7 +776,7 @@ private struct OtherInterestCard: View {
             Spacer()
             
             Image(systemName: text.isEmpty ? "circle" : "checkmark.circle.fill")
-                .font(.system(size: 22))
+                .font(.title3)
                 .foregroundStyle(text.isEmpty ? Color.secondary.opacity(0.35) : mintGreen)
         }
         .padding(.horizontal, 20)
@@ -847,7 +847,7 @@ struct CurvedArrow: View {
             
             // Arrowhead at the tip pointing up-left
             Image(systemName: "arrowtriangle.up.fill")
-                .font(.system(size: 10))
+                .font(.caption2)
                 .foregroundColor(Color(red: 0.0, green: 0.82, blue: 0.58))
                 .rotationEffect(.degrees(-60))
                 .position(x: 18, y: 14)

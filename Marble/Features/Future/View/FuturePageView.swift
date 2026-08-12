@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FuturePageView: View {
     @EnvironmentObject private var router: AppRouter
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: FutureViewModel
     @State private var currentIndex: Int = 1
     @State private var dragOffset: CGFloat = 0
@@ -12,36 +13,29 @@ struct FuturePageView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header / Back Button
-            HStack {
-                Button(action: { router.pop() }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
-                        .foregroundColor(.black)
-                }
-                Spacer()
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            
-            Spacer(minLength: 8)
+            Spacer(minLength: 16)
             
             // Main Content Stack raised to the top
             VStack(spacing: 24) {
                 // Header Text block
                 VStack(spacing: 8) {
-                    Text("19h 17m")
-                        .font(.system(size: 44, weight: .bold, design: .rounded))
-                        .foregroundColor(.primary)
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .padding(.bottom, 8)
+                    } else {
+                        Text(viewModel.impactData != nil ? "\(viewModel.impactData!.totalHours)h" : "...")
+                            .font(.system(.largeTitle, design: .rounded).bold())
+                            .foregroundColor(.primary)
+                    }
                     
-                    (Text("If Nothing ")
+                    (Text("If You Keep ")
                         .foregroundColor(.secondary)
-                     + Text("Changes")
+                     + Text("This Up")
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
                      + Text(" for the Next ")
                         .foregroundColor(.secondary)
-                     + Text("3 Years")
+                     + Text(viewModel.impactData != nil ? "\(viewModel.impactData!.projectionYears) Years" : "...")
                         .fontWeight(.bold)
                         .foregroundColor(.primary))
                     .font(.system(.body, design: .rounded))
@@ -102,10 +96,12 @@ struct FuturePageView: View {
             
             Spacer(minLength: 90) // Push everything upwards moderately
         }
-        .toolbar(.hidden, for: .navigationBar)
         .background(Color(uiColor: .systemBackground).ignoresSafeArea())
         .onAppear {
             viewModel.loadOrbPersonality()
+            Task {
+                await viewModel.loadImpactData(modelContext: modelContext)
+            }
         }
     }
     
@@ -115,25 +111,20 @@ struct FuturePageView: View {
         let subtitle: String
         let description: String
         
-        switch index {
-        case 0:
-            title = "2,050 H - 85 D"
-            iconName = "brain.head.profile"
-            subtitle = "FOCUS"
-            description = "Loss of Concentration & Learning Ability"
-        case 2:
-            title = "1,520 H - 63 D"
-            iconName = "person.2.fill"
-            subtitle = "SOCIAL"
-            description = "Missed Real-life Interactions"
-        default: // Index 1
-            title = "3,008 H - 125 D"
-            iconName = "moon.fill"
-            subtitle = "SLEEP"
-            description = "Shorter Duration & Poorer Quality"
+        if let data = viewModel.impactData, data.categories.count > index {
+            let cat = data.categories[index]
+            title = "\(data.totalHours) H - \(data.totalDays) D"
+            iconName = cat.iconSFSymbol
+            subtitle = cat.category.uppercased()
+            description = cat.message
+        } else {
+            title = "..."
+            iconName = "hourglass"
+            subtitle = "LOADING..."
+            description = "Fetching your future impact projections..."
         }
         
-        return VStack(spacing: 28) {
+        return VStack(spacing: 16) {
             VStack(spacing: 4) {
                 Text(title)
                     .font(.system(.headline, design: .rounded))
@@ -146,7 +137,7 @@ struct FuturePageView: View {
             }
             
             Image(systemName: iconName)
-                .font(.system(size: 88))
+                .font(.system(size: 72)) // Sedikit diperkecil agar teks bisa lebih besar
                 .foregroundColor(.primary)
                 .padding(.vertical, 4)
             
@@ -157,13 +148,15 @@ struct FuturePageView: View {
                     .foregroundColor(.primary)
                 
                 Text(description)
-                    .font(.system(.caption, design: .rounded))
-                    .fontWeight(.bold)
-                    .foregroundColor(.secondary)
+                    .font(.system(.body, design: .rounded)) // Font diperbesar ke body
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary.opacity(0.9))
                     .multilineTextAlignment(.center)
+                    .lineLimit(6) // Line limit ditambah
+                    .minimumScaleFactor(0.8)
             }
         }
-        .padding(.vertical, 32)
+        .padding(.vertical, 24) // Padding diperkecil agar konten bisa bernafas
         .padding(.horizontal, 24)
         .frame(width: 275, height: 385)
         .background(

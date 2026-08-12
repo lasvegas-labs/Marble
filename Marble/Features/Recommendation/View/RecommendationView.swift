@@ -11,7 +11,7 @@ struct RecommendationView: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             if showCelebration {
                 CelebrationScreen(onBackToHome: {
@@ -37,7 +37,6 @@ struct RecommendationView: View {
             }
         }
         .navigationBarHidden(true)
-        .preferredColorScheme(.light)
         .task {
             let vm = RecommendationViewModel(modelContext: modelContext)
             viewModel = vm
@@ -53,14 +52,14 @@ private struct RecommendationListScreen: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
                 // Header
                 VStack(alignment: .leading, spacing: 6) {
                     Text("See Recommendations")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.black)
+                        .font(.title.bold())
+                        .foregroundColor(.primary)
 
                     Text("It Could Be More Useful for You")
                         .font(.system(.subheadline))
@@ -105,11 +104,11 @@ private struct RecommendationListScreen: View {
                 Spacer()
                 Button(action: onContinue) {
                     Text("Continue")
-                        .font(.system(.body, design: .rounded, weight: .semibold))
-                        .foregroundColor(.black)
+                        .font(.system(.body, design: .rounded).weight(.semibold))
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(Color.white.opacity(0.92))
+                        .background(Color(uiColor: .systemBackground).opacity(0.92))
                         .clipShape(Capsule())
                         .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
                 }
@@ -179,7 +178,7 @@ private struct CelebrationScreen: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -195,9 +194,9 @@ private struct CelebrationScreen: View {
                 .opacity(orbAppeared ? 1 : 0)
 
                 Text("Yay One Step Closer to Throw\nAway Doomscrolling")
-                    .font(.system(size: 26, weight: .bold))
+                    .font(.title.bold())
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .padding(.horizontal, 32)
                     .padding(.top, 32)
                     .opacity(orbAppeared ? 1 : 0)
@@ -207,11 +206,11 @@ private struct CelebrationScreen: View {
 
                 Button(action: onBackToHome) {
                     Text("Back to Home")
-                        .font(.system(.body, design: .rounded, weight: .semibold))
-                        .foregroundColor(.black)
+                        .font(.system(.body, design: .rounded).weight(.semibold))
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(Color(red: 0.95, green: 0.95, blue: 0.96))
+                        .background(Color(uiColor: .secondarySystemBackground))
                         .clipShape(Capsule())
                 }
                 .padding(.horizontal, 24)
@@ -219,7 +218,6 @@ private struct CelebrationScreen: View {
                 .opacity(orbAppeared ? 1 : 0)
             }
         }
-        .preferredColorScheme(.light)
         .onAppear {
             withAnimation(.spring(response: 0.9, dampingFraction: 0.7).delay(0.15)) {
                 orbAppeared = true
@@ -241,13 +239,13 @@ private struct BubbleCard: View {
             VStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 48, weight: .regular))
-                    .foregroundStyle(.black.opacity(0.75))
+                    .foregroundStyle(.primary.opacity(0.75))
                     .frame(height: 56)
 
                 Text(title)
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .font(.system(.footnote, design: .rounded).weight(.medium))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.black.opacity(0.8))
+                    .foregroundColor(.primary.opacity(0.8))
                     .lineLimit(4)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 8)

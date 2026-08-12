@@ -12,10 +12,11 @@ enum AppConfig {
         if let url = Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String, !url.isEmpty {
             return url
         }
-        return "http://192.168.0.113:9090"
+        return "https://my-plenger.pt-tensakarya.com"
     }()
 
     static let recommendationEndpoint = "\(baseURL)/friction"
+    static let futureImpactEndpoint = "\(baseURL)/future-impact"
 
     static let appGroupIdentifier = "group.otniel"
     static let shieldStateKey = "marble_shield_state"
