@@ -137,9 +137,6 @@ final class SetupProfileViewModel: ObservableObject {
         switch currentStep {
         case .screenTimePermission:
             permissionStatus = await screenTimeService.requestAuthorization()
-            return persist(nextStep: .timeLostCalculation)
-
-        case .timeSavedEffect:
             let nextStep: SetupProfileStep = permissionStatus.isApproved
                 ? .distractingApps
                 : .orbPersona
@@ -171,13 +168,7 @@ final class SetupProfileViewModel: ObservableObject {
         switch currentStep {
         case .screenTimePermission:
             permissionStatus = screenTimeService.authorizationStatus
-            return persist(nextStep: .timeLostCalculation)
-
-        case .timeSavedEffect:
-            let nextStep: SetupProfileStep = permissionStatus.isApproved
-                ? .distractingApps
-                : .orbPersona
-            return persist(nextStep: nextStep)
+            return persist(nextStep: .orbPersona)
 
         case .distractingApps:
             activitySelection = FamilyActivitySelection()
@@ -206,9 +197,7 @@ final class SetupProfileViewModel: ObservableObject {
 
         let previousStep: SetupProfileStep
         if currentStep == .orbPersona, !permissionStatus.isApproved {
-            previousStep = .timeSavedEffect
-        } else if currentStep == .distractingApps, !permissionStatus.isApproved {
-            previousStep = .timeSavedEffect
+            previousStep = .screenTimePermission
         } else if currentStep == .notificationPermission {
             previousStep = .orbPersona
         } else {

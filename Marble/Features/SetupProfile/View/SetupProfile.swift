@@ -112,10 +112,6 @@ struct SetupProfileView: View {
             InterestsStepView(viewModel: viewModel)
         case .screenTimePermission:
             ScreenTimePermissionStepView(viewModel: viewModel)
-        case .timeLostCalculation:
-            TimeLostCalculationStepView(viewModel: viewModel)
-        case .timeSavedEffect:
-            TimeSavedEffectStepView(viewModel: viewModel)
         case .distractingApps:
             DistractingAppsStepView(viewModel: viewModel)
         case .focusWindow:
