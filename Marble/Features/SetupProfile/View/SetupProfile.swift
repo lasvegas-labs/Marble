@@ -55,7 +55,7 @@ struct SetupProfileView: View {
             HStack(spacing: 12) {
                 Button(action: backAction) {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.body.weight(.semibold))
                         .foregroundStyle(.primary)
                         .frame(width: 42, height: 42)
                         .background(Color(uiColor: .systemGray6))

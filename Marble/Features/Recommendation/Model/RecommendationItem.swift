@@ -10,7 +10,7 @@ import SwiftUI
 struct RecommendationItem: Decodable, Identifiable {
     let message: String
     let iconSFSymbol: String
-    let colorName: String
+    let colorName: String?
     let colorStart: String
     let colorEnd: String
 

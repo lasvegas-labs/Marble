@@ -56,7 +56,9 @@ final class RecommendationViewModel: ObservableObject {
         let hobbies = mapInterests(profile?.interestRawValues ?? [])
         let app = UserDefaults(suiteName: AppConfig.appGroupIdentifier)?
             .string(forKey: AppConfig.lastTriggeredAppKey) ?? "App"
-        let time = ISO8601DateFormatter().string(from: Date())
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone.current
+        let time = formatter.string(from: Date())
 
         return RecommendationRequest(
             role: role,

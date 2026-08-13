@@ -11,4 +11,5 @@ enum SettingsRoute: Hashable {
     case main
     case editProfile
     case chooseCompanion
+    case focusWindows
 }

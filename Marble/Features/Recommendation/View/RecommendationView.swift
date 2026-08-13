@@ -11,7 +11,7 @@ struct RecommendationView: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             if showCelebration {
                 CelebrationScreen(onBackToHome: {
@@ -37,7 +37,6 @@ struct RecommendationView: View {
             }
         }
         .navigationBarHidden(true)
-        .preferredColorScheme(.light)
         .task {
             let vm = RecommendationViewModel(modelContext: modelContext)
             viewModel = vm
@@ -53,13 +52,14 @@ private struct RecommendationListScreen: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
+                // Header
                 VStack(alignment: .leading, spacing: 6) {
                     Text("See Recommendations")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.black)
+                        .font(.title.bold())
+                        .foregroundColor(.primary)
 
                     Text("It Could Be More Useful for You")
                         .font(.system(.subheadline))
@@ -67,6 +67,7 @@ private struct RecommendationListScreen: View {
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 40)
+                .padding(.bottom, 8)
 
                 if viewModel.isLoading {
                     Spacer()
@@ -74,11 +75,14 @@ private struct RecommendationListScreen: View {
                     Spacer()
                 } else {
                     staggeredCards
+                        .padding(.top, 16)
                 }
 
-                Spacer()
+                // Space for the Continue button
+                Spacer(minLength: 80)
             }
 
+            // Orb decoration — bottom left, clipped
             VStack {
                 Spacer()
                 HStack {
@@ -88,27 +92,28 @@ private struct RecommendationListScreen: View {
                         showShadow: false,
                         speed: 30
                     ))
-                    .frame(width: 280, height: 280)
-                    .offset(x: -80, y: 80)
+                    .frame(width: 220, height: 220)
+                    .offset(x: -60, y: 60)
                     Spacer()
                 }
             }
             .ignoresSafeArea()
 
+            // Continue button pinned to bottom
             VStack {
                 Spacer()
                 Button(action: onContinue) {
                     Text("Continue")
-                        .font(.system(.body, design: .rounded, weight: .semibold))
-                        .foregroundColor(.black)
+                        .font(.system(.body, design: .rounded).weight(.semibold))
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(Color.white.opacity(0.85))
+                        .background(Color(uiColor: .systemBackground).opacity(0.92))
                         .clipShape(Capsule())
-                        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+                        .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 16)
+                .padding(.bottom, 24)
             }
         }
         .onAppear {
@@ -119,49 +124,51 @@ private struct RecommendationListScreen: View {
     }
 
     private var staggeredCards: some View {
-        let items = viewModel.items
-        return GeometryReader { geo in
-            let w = geo.size.width
-            let cardW: CGFloat = w * 0.45
-            let cardH: CGFloat = cardW * 0.95
+        VStack(spacing: 0) {
+            ForEach(Array(viewModel.items.enumerated()), id: \.element.id) { index, item in
+                HStack(spacing: 0) {
+                    if index.isMultiple(of: 2) {
+                        BubbleCard(
+                            icon: item.iconSFSymbol,
+                            title: item.message,
+                            gradientColors: item.gradientColors
+                        )
+                        .frame(width: 200, height: 200)
+                        .padding(.leading, 28)
+                        .padding(.trailing, 60)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 30)
+                        .animation(
+                            .spring(response: 0.55, dampingFraction: 0.72)
+                            .delay(Double(index) * 0.14),
+                            value: cardsAppeared
+                        )
 
-            VStack(spacing: 12) {
-                ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
-                    HStack {
-                        if index.isMultiple(of: 2) {
-                            BubbleCard(
-                                icon: item.iconSFSymbol,
-                                title: item.message,
-                                gradientColors: item.gradientColors,
-                                tailAlignment: index == items.count - 1 ? .bottomTrailing : .bottom
-                            )
-                            .frame(width: cardW, height: cardH)
-                            .opacity(cardsAppeared ? 1 : 0)
-                            .offset(y: cardsAppeared ? 0 : 20)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.75).delay(Double(index) * 0.12), value: cardsAppeared)
+                        Spacer(minLength: 0)
+                    } else {
+                        Spacer(minLength: 0)
 
-                            Spacer()
-                        } else {
-                            Spacer()
-
-                            BubbleCard(
-                                icon: item.iconSFSymbol,
-                                title: item.message,
-                                gradientColors: item.gradientColors,
-                                tailAlignment: .bottomLeading
-                            )
-                            .frame(width: cardW, height: cardH)
-                            .opacity(cardsAppeared ? 1 : 0)
-                            .offset(y: cardsAppeared ? 0 : 20)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.75).delay(Double(index) * 0.12), value: cardsAppeared)
-                        }
+                        BubbleCard(
+                            icon: item.iconSFSymbol,
+                            title: item.message,
+                            gradientColors: item.gradientColors
+                        )
+                        .frame(width: 200, height: 200)
+                        .padding(.trailing, 28)
+                        .padding(.leading, 60)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 30)
+                        .animation(
+                            .spring(response: 0.55, dampingFraction: 0.72)
+                            .delay(Double(index) * 0.14),
+                            value: cardsAppeared
+                        )
                     }
-                    .padding(.horizontal, 24)
                 }
+                // Overlap cards slightly for a staggered feel
+                .padding(.top, index == 0 ? 0 : -30)
             }
-            .padding(.top, 24)
         }
-        .frame(minHeight: CGFloat(viewModel.items.count) * 140 + 40)
     }
 }
 
@@ -171,7 +178,7 @@ private struct CelebrationScreen: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color(uiColor: .systemBackground).ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -187,9 +194,9 @@ private struct CelebrationScreen: View {
                 .opacity(orbAppeared ? 1 : 0)
 
                 Text("Yay One Step Closer to Throw\nAway Doomscrolling")
-                    .font(.system(size: 26, weight: .bold))
+                    .font(.title.bold())
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .padding(.horizontal, 32)
                     .padding(.top, 32)
                     .opacity(orbAppeared ? 1 : 0)
@@ -199,11 +206,11 @@ private struct CelebrationScreen: View {
 
                 Button(action: onBackToHome) {
                     Text("Back to Home")
-                        .font(.system(.body, design: .rounded, weight: .semibold))
-                        .foregroundColor(.black)
+                        .font(.system(.body, design: .rounded).weight(.semibold))
+                        .foregroundColor(.primary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(Color(red: 0.95, green: 0.95, blue: 0.96))
+                        .background(Color(uiColor: .secondarySystemBackground))
                         .clipShape(Capsule())
                 }
                 .padding(.horizontal, 24)
@@ -211,7 +218,6 @@ private struct CelebrationScreen: View {
                 .opacity(orbAppeared ? 1 : 0)
             }
         }
-        .preferredColorScheme(.light)
         .onAppear {
             withAnimation(.spring(response: 0.9, dampingFraction: 0.7).delay(0.15)) {
                 orbAppeared = true
@@ -220,61 +226,92 @@ private struct CelebrationScreen: View {
     }
 }
 
+// MARK: - Bubble Card
+
 private struct BubbleCard: View {
     let icon: String
     let title: String
     let gradientColors: [Color]
-    let tailAlignment: Alignment
 
     var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.system(size: 34))
-                .foregroundColor(.black)
+        ZStack(alignment: .bottom) {
+            // Card body
+            VStack(spacing: 12) {
+                Image(systemName: icon)
+                    .font(.system(size: 48, weight: .regular))
+                    .foregroundStyle(.primary.opacity(0.75))
+                    .frame(height: 56)
 
-            Text(title)
-                .font(.system(.caption, design: .default))
-                .fontWeight(.medium)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.black)
-                .lineLimit(4)
-        }
-        .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            LinearGradient(
-                colors: gradientColors,
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay(alignment: tailAlignment) {
-            BubbleTail()
-                .fill(
-                    LinearGradient(
-                        colors: gradientColors,
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
+                Text(title)
+                    .font(.system(.footnote, design: .rounded).weight(.medium))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.primary.opacity(0.8))
+                    .lineLimit(4)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 8)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .background(
+                LinearGradient(
+                    colors: gradientColors,
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
                 )
-                .frame(width: 16, height: 14)
-                .offset(y: 12)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .shadow(color: gradientColors.first?.opacity(0.3) ?? .clear, radius: 16, x: 0, y: 6)
+            .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+
+            // Bubble tail — bottom center pointing down
+            DownwardTail(colors: gradientColors)
+                .offset(y: 19) // Push down so it sticks out of the card
         }
-        .shadow(color: .black.opacity(0.07), radius: 8, x: 0, y: 4)
+        .padding(.bottom, 20) // room for tail
     }
 }
 
-private struct BubbleTail: Shape {
+private struct DownwardTail: View {
+    let colors: [Color]
+
+    var body: some View {
+        BubbleTailShape()
+            .fill(
+                LinearGradient(
+                    colors: colors,
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .frame(width: 44, height: 20) // Wider for a smoother sweep
+    }
+}
+
+private struct BubbleTailShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.maxX, y: rect.minY),
-            control: CGPoint(x: rect.midX, y: rect.midY * 0.4)
+        
+        // Start at top-left
+        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        
+        // Curve down to the rounded tip at the bottom center
+        path.addCurve(
+            to: CGPoint(x: rect.midX, y: rect.maxY),
+            control1: CGPoint(x: rect.minX + rect.width * 0.35, y: rect.minY),
+            control2: CGPoint(x: rect.midX - rect.width * 0.1, y: rect.maxY)
         )
+        
+        // Curve back up to the top-right
+        path.addCurve(
+            to: CGPoint(x: rect.maxX, y: rect.minY),
+            control1: CGPoint(x: rect.midX + rect.width * 0.1, y: rect.maxY),
+            control2: CGPoint(x: rect.maxX - rect.width * 0.35, y: rect.minY)
+        )
+        
+        // Close back across the top (attaches to the card)
         path.closeSubpath()
+        
         return path
     }
 }
@@ -285,3 +322,4 @@ private struct BubbleTail: Shape {
             .environmentObject(AppRouter())
     }
 }
+

@@ -87,7 +87,7 @@ struct MarbleApp: App {
                 }
             }
         }
-        .modelContainer(for: SetupProfileModel.self)
+        .modelContainer(for: [SetupProfileModel.self, FocusWindowModel.self])
     }
 
     private func beginHandoff() {

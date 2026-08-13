@@ -39,7 +39,7 @@ struct SplashView: View {
             let textCenterX = width / 2
 
             ZStack(alignment: .topLeading) {
-                Color.white
+                Color(uiColor: .systemBackground)
 
                 OrbView(configuration: orbConfiguration)
                     .frame(width: fullDiameter, height: fullDiameter)
@@ -48,9 +48,9 @@ struct SplashView: View {
                     .accessibilityHidden(true)
 
                 Text("MARBLE")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(.largeTitle.bold())
                     .tracking(5)
-                    .foregroundStyle(isCollapsed ? .black : .white)
+                    .foregroundStyle(isCollapsed ? Color.primary : Color.white)
                     .position(
                         x: textCenterX,
                         y: animationCenterY + (isCollapsed ? finalDiameter * 0.5 + 28 : 0)

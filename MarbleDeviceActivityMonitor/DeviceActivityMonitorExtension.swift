@@ -11,7 +11,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     private let focusStore = ManagedSettingsStore(
         named: ManagedSettingsStore.Name("marble.focus")
     )
-    private let appGroupID = "group.com.lasvegas.Marblefahmi1"
+    private let appGroupID = "group.otniel"
     private let savedSelectionKey = "saved_activity_selection"
     private let stateKey = "marble_shield_state"
     private let focusWindowActiveKey = "screenTime.focusWindowActive"

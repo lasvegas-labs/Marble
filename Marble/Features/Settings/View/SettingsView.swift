@@ -7,12 +7,14 @@
 
 import SwiftUI
 import FamilyControls
+import SwiftData
 
 struct SettingsView: View {
     @EnvironmentObject private var router: AppRouter
     @StateObject private var viewModel: SettingsViewModel
     @ObservedObject private var screenTime = ScreenTimeManager.shared
     @State private var isPickerPresented = false
+    @Query private var focusWindows: [FocusWindowModel]
 
     init(viewModel: SettingsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -22,7 +24,7 @@ struct SettingsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Settings")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(.title.bold())
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
                     .padding(.bottom, 24)
@@ -44,7 +46,9 @@ struct SettingsView: View {
                         router.push(.settings(.chooseCompanion))
                     }
                     Divider().padding(.leading, 64)
-                    SettingsRowView(icon: "figure.mind.and.body.circle", label: "Edit your focus window")
+                    SettingsRowView(icon: "figure.mind.and.body.circle", label: "Edit your focus window") {
+                        router.push(.settings(.focusWindows))
+                    }
                     Divider().padding(.leading, 64)
                 }
             }
@@ -56,7 +60,9 @@ struct SettingsView: View {
             screenTime.checkAuthorizationStatus()
         }
         .onChange(of: screenTime.selectionToDiscourage) { _ in
-            screenTime.applyShield()
+            let service = ScreenTimeService()
+            try? service.saveSelection(screenTime.selectionToDiscourage)
+            try? service.configureFocusMonitoring(for: screenTime.selectionToDiscourage, focusWindows: focusWindows)
         }
     }
 }
@@ -79,13 +85,13 @@ struct SettingsRowView: View {
                     .frame(width: 44)
 
                 Text(label)
-                    .font(.system(size: 17))
+                    .font(.body)
                     .foregroundStyle(.primary)
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.footnote.weight(.semibold))
                     .foregroundStyle(SettingsTheme.chevron)
             }
             .padding(.horizontal, 20)
