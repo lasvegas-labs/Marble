@@ -94,7 +94,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 title: ShieldConfiguration.Label(text: "Are you sure to continue?", color: .black),
                 subtitle: ShieldConfiguration.Label(text: "I have some fun and useful recommendation for you", color: .gray),
                 primaryButtonLabel: ShieldConfiguration.Label(text: "Show The Recommendation", color: .black),
-                primaryButtonBackgroundColor: UIColor(white: 0.95, alpha: 1.0),
+                primaryButtonBackgroundColor: UIColor(hex: "#00C8B3"),
                 secondaryButtonLabel: ShieldConfiguration.Label(text: "Continue Scrolling", color: .gray)
             )
             
@@ -106,7 +106,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 title: ShieldConfiguration.Label(text: "Hey, it's been 15mins", color: .black),
                 subtitle: ShieldConfiguration.Label(text: "You've been scrolling for a while. Maybe it's a good moment to take a short break, stretch a little, or simply rest your eyes.", color: .gray),
                 primaryButtonLabel: ShieldConfiguration.Label(text: "Show The Recommendation", color: .black),
-                primaryButtonBackgroundColor: UIColor(white: 0.95, alpha: 1.0),
+                primaryButtonBackgroundColor: UIColor(hex: "#00C8B3"),
                 secondaryButtonLabel: ShieldConfiguration.Label(text: "Continue Scrolling", color: .gray)
             )
             

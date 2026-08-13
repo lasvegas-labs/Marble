@@ -82,6 +82,27 @@
 			);
 			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
 		};
+		9FCFE1B5302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleShieldConfiguration" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Helper/Color+Extension.swift",
+			);
+			target = F26E92991EEA1CAD9CCF7CA1 /* MarbleShieldConfiguration */;
+		};
+		9FCFE1B6302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleShieldAction" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Helper/Color+Extension.swift",
+			);
+			target = FF7E781787226B5E8E5EE76D /* MarbleShieldAction */;
+		};
+		9FCFE1B7302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleDeviceActivityReport" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Helper/Color+Extension.swift",
+			);
+			target = 17F3619D302C171B0020876C /* MarbleDeviceActivityReport */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +116,11 @@
 		};
 		9F2B623C3029825D00345B7B /* Marble */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9FCFE1B5302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleShieldConfiguration" target */,
+				9FCFE1B6302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleShieldAction" target */,
+				9FCFE1B7302D4A1100720EB0 /* Exceptions for "Marble" folder in "MarbleDeviceActivityReport" target */,
+			);
 			path = Marble;
 			sourceTree = "<group>";
 		};
