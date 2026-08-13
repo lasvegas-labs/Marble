@@ -13,7 +13,7 @@ public enum MarbleShieldState: String, Codable {
 public final class ShieldStateManager {
     public static let shared = ShieldStateManager()
     
-    private let appGroupID = "group.otniel"
+    private let appGroupID = "group.com.otniel.Marble"
     private let stateKey = "marble_shield_state"
     private let focusWindowActiveKey = "screenTime.focusWindowActive"
     

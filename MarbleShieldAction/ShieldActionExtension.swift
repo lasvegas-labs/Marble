@@ -15,7 +15,7 @@ public enum MarbleShieldState: String, Codable {
 public final class ShieldStateManager {
     public static let shared = ShieldStateManager()
     
-    private let appGroupID = "group.otniel"
+    private let appGroupID = "group.com.otniel.Marble"
     private let stateKey = "marble_shield_state"
     
     private var userDefaults: UserDefaults? {
@@ -130,7 +130,7 @@ class ShieldActionExtension: ShieldActionDelegate {
     // MARK: - Action Helpers
 
     nonisolated private var isScheduledFocusWindowActive: Bool {
-        UserDefaults(suiteName: "group.otniel")?
+        UserDefaults(suiteName: "group.com.otniel.Marble")?
             .bool(forKey: "screenTime.focusWindowActive") ?? false
     }
     
@@ -140,38 +140,43 @@ class ShieldActionExtension: ShieldActionDelegate {
         switch currentState {
         case .friction, .fifteenMinuteThreshold:
             // User tapped "Show The Recommendation" from initial friction or 15-minute threshold
-            sendRecommendationNotification()
             ShieldStateManager.shared.currentState = .waitingForNotification
-            completionHandler(.defer)
+            sendRecommendationNotification {
+                completionHandler(.defer)
+            }
             
         case .waitingForNotification:
             // User tapped "Didn't See The Notification"
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
                 ShieldStateManager.shared.currentState = .focusActive
+                completionHandler(.defer)
             } else {
-                sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
+                sendRecommendationNotification {
+                    completionHandler(.defer)
+                }
             }
-            completionHandler(.defer)
             
         case .focusActive:
             // User tapped "Try Again"
             let isFocused = INFocusStatusCenter.default.focusStatus.isFocused ?? false
             if isFocused {
                 ShieldStateManager.shared.currentState = .focusActive
+                completionHandler(.defer)
             } else {
-                sendRecommendationNotification()
                 ShieldStateManager.shared.currentState = .waitingForNotification
+                sendRecommendationNotification {
+                    completionHandler(.defer)
+                }
             }
-            completionHandler(.defer)
         }
     }
     
     // MARK: - Logic Helpers
     
     nonisolated private func saveTriggeredApp(_ appName: String) {
-        UserDefaults(suiteName: "group.otniel")?
+        UserDefaults(suiteName: "group.com.otniel.Marble")?
             .set(appName, forKey: "marble_last_triggered_app")
     }
 
@@ -215,16 +220,16 @@ class ShieldActionExtension: ShieldActionDelegate {
         liftShield(for: webDomain)
     }
     
-    nonisolated private func sendRecommendationNotification() {
+    nonisolated private func sendRecommendationNotification(completion: @escaping () -> Void) {
         let content = UNMutableNotificationContent()
         content.title = "Marble"
         content.body = "Click to see activity recommendations"
         content.sound = .default
         content.userInfo = ["url": "marble://recommendation"]
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
         let request = UNNotificationRequest(
-            identifier: "marble_recommendation",
+            identifier: "marble_recommendation_\(UUID().uuidString)",
             content: content,
             trigger: trigger
         )
@@ -233,6 +238,7 @@ class ShieldActionExtension: ShieldActionDelegate {
             if let error = error {
                 print("Error scheduling notification: \(error)")
             }
+            completion()
         }
     }
     
@@ -241,7 +247,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         let activityName = DeviceActivityName("marble.usage.monitoring")
         center.stopMonitoring([activityName])
         
-        let appGroupID = "group.otniel"
+        let appGroupID = "group.com.otniel.Marble"
         let savedSelectionKey = "saved_activity_selection"
         let sharedDefaults = UserDefaults(suiteName: appGroupID)
         
