@@ -4,7 +4,7 @@ import Foundation
 import ManagedSettings
 
 enum ScreenTimeStorage {
-    static let appGroupIdentifier = "group.otniel"
+    static let appGroupIdentifier = "group.com.otniel.Marble"
     static let selectionKey = "saved_activity_selection"
     static let thresholdMinutesKey = "usage_threshold_minutes"
     static let focusWindowActiveKey = "screenTime.focusWindowActive"
